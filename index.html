@@ -1,42 +1,26 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+<html lang="en">
+<head>
     <meta charset="utf-8">
-    <title>KML Layers</title>
-    <style>
-      html, body, #map-canvas {
-        height: 100%;
-        margin: 0px;
-        padding: 0px
-      }
-    </style>
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-    <script>
-function initialize() {
-
-    var styles = [{"featureType":"water","stylers":[{"color":"#46bcec"},{"visibility":"on"}]},{"featureType":"landscape","stylers":[{"color":"#f2f2f2"}]},{"featureType":"road","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road.highway","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"transit","stylers":[{"visibility":"off"}]},{"featureType":"poi","stylers":[{"visibility":"off"}]}]
+    <title>Élections Québec 2014</title>
+    <!--<link rel="stylesheet" href="css/style.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>-->
+    <script src="js/jquery-2.1.0.min.js"></script>
+    <script src="js/proj4js-combined.js"></script>
+    <script src="js/jquery.csv-0.71.min.js"></script>
     
-    var quebec = new google.maps.LatLng(46.634351,-72.290039);
-    var mapOptions = {
-        zoom: 11,
-        center: quebec,
-        styles: styles
-    }
+    <!--[if IE]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <script src="js/elections.js"></script>
     
-    var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-    
-    var ctaLayer = new google.maps.KmlLayer({
-        url: 'https://raw.github.com/paulcote/qc_2014_elections/master/carte2011simple.kml'
-    });
-    ctaLayer.setMap(map);
-}
-
-google.maps.event.addDomListener(window, 'load', initialize);
-
+    <script type="text/javascript">
+    	    	
     </script>
-  </head>
-  <body>
-    <div id="map-canvas"></div>
-  </body>
+</head>
+
+<body id="home">
+	<canvas id="map" width="1000" height="1000"></canvas>
+	<canvas id="map2" style="position: absolute; top: 7px; left: 7px;" width="1000" height="1000"></canvas>
+</body>
 </html>
