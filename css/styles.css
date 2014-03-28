@@ -3,16 +3,23 @@ body, html {
   height: 100%;
   margin: 0;
   padding: 0;
-  position: relativel;
+  position: relative;
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  -o-transform: translateZ(0);
+  transform: translateZ(0);
 }
 
 @-webkit-keyframes bganim {
   from {
-    background-position: 0 0;
+    margin-left: 0%;
+    margin-top: 0%;
   }
 
   to {
-    background-position: -500px -200px;
+    margin-left: -50%;
+    margin-top: -50%;
   }
 }
 
@@ -24,8 +31,7 @@ body, html {
   display: block;
   overflow: hidden;
 }
-.tapestry .motif {
-  -webkit-animation: bganim 30s linear infinite;
+.tapestry .container {
   position: absolute;
   width: 200vw;
   height: 200vh;
@@ -39,9 +45,14 @@ body, html {
   top: 0;
   margin-left: -50vw;
   margin-top: -80vh;
-  background-image: url("../img/motif.gif");
   background-color: #04285f;
+}
+.tapestry .motif {
+  -webkit-animation: bganim 90s linear infinite;
+  background-image: url("../img/motif.gif");
   background-size: 40px;
+  width: 200%;
+  height: 150%;
 }
 
 .bggradiant-top {
