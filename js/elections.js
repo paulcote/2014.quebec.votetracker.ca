@@ -542,14 +542,14 @@ $(function() {
 	loadDisctricts("data/liste_circonscription.csv");
 	loadRegions("data/carte2011.kml");
 	loadParties("data/partispolitiques.csv");
-	loadPartiesColors("data/colors.json");
+	loadPartiesColors("http://elections.paulcote.net/data/colors.json");
 	loadCandidates("data/liste_candidat.csv");
-	projectPolygonFeatures(districts);
+	//projectPolygonFeatures(districts);
 					
 	setTimeout(function(){
 		console.log('Results loaded');
 		//loadPartiesResults("data/partispolitiques.csv");
 		//loadCandidatesResults("data/candidats.csv");
-		loadResults("data/resultats.json");
+		loadResults("http://elections.paulcote.net/data/resultats.json");
 	}, 5000);
 });
