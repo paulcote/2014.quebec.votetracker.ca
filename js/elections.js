@@ -32,7 +32,7 @@ function loadDisctricts(file){
 
 var regions = new Array();
 
-function loadRegions(file){
+function loadRegionsFromKML(file){
 	$.ajax( file ,{async:false, success: function( xml ) {
 	
 		$( xml ).find( 'Placemark' ).each( function(nbDistrict) {
@@ -45,36 +45,37 @@ function loadRegions(file){
 				var ring = new Array();
 				var coordsText = $( this ).find( 'LinearRing' ).find( 'coordinates' ).text();
 				var coordStrings = coordsText.split( ' ' );
+				var index = 0;
 				for ( var coordText in coordStrings ) {
 					var coordinate = new Array();
 					var coordSplit = coordStrings[ coordText ].split( ',' );
-					if ( coordSplit.length == 2 ) {
-						for ( var coordInd in coordSplit ) {
-							coordinate.push( Number( coordSplit[ coordInd ] ) );
-						}
-						ring.push( coordinate );
-					}
-					else if ( coordSplit.length == 3 ) {
-						coordSplit.pop();
-						for ( var coordInd in coordSplit ) {
-							coordinate.push( Number( coordSplit[ coordInd ] ) );
-						}
-						ring.push( coordinate );
+					if(index % 2 == 0){
+    					if ( coordSplit.length == 2 ) {
+    						for ( var coordInd in coordSplit ) {
+    							coordinate.push( Number( coordSplit[ coordInd ] ).toFixed(4) );
+    						}
+    						ring.push( coordinate );
+    					}
+    					else if ( coordSplit.length == 3 ) {
+    						coordSplit.pop();
+    						for ( var coordInd in coordSplit ) {
+    							coordinate.push( Number( coordSplit[ coordInd ] ).toFixed(4) );
+    						}
+    						ring.push( coordinate );
+    					}
 					}
 				}
 				rings.push( ring );
 			} );
 			
 			var district = findDistrictByName(name);
-			
-			if(!districts[district.id]){
-				var stop = 1;
-				console.log(name);
-			}
-			else{
-				districts[district.id].rings = new Array();
-				districts[district.id].rings = rings;
-			}
+
+			regions[district.id] = new Object();
+			regions[district.id].rings = new Array();
+			regions[district.id].rings = rings;
+
+			districts[district.id].rings = new Array();
+			districts[district.id].rings = rings;
 		});
 	}});
 }
@@ -540,7 +541,7 @@ function print(obj, maxDepth, prefix){
 
 $(function() {
 	loadDisctricts("data/liste_circonscription.csv");
-	loadRegions("data/carte2011.kml");
+	loadRegionsFromKML("data/carte2011.kml");
 	loadParties("data/partispolitiques.csv");
 	loadPartiesColors("http://elections.paulcote.net/data/colors.json");
 	loadCandidates("data/liste_candidat.csv");
