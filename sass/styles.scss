@@ -1,0 +1,118 @@
+@import "compass";
+@import "compass/reset";
+
+body{
+	background-color: #3aa1d3;
+	color: white;
+	font-family: Roboto, sans-serif;
+	font-size: 18px;
+}
+
+img{
+	max-width: 100%;
+}
+
+.drkgb.plq{
+	background-color: #ad1422;
+}
+
+.drkgb.pq{
+	background-color: #359ad3;
+}
+
+.drkgb.caq{
+	background-color: #008fbf;
+}
+
+.drkgb.qs{
+	background-color: #bc4e1a;
+}
+
+.drkgb.on{
+	background-color: #004079;
+}
+
+.border{
+	border-width: 3px;
+	border-style: solid;
+}
+
+.border.plq{
+	border-color: #ed1b2e;
+}
+
+.border.pq{
+	border-color: #2b7dab;
+}
+
+.border.caq{
+	border-color: #00b3ef;
+}
+
+.border.qs{
+	border-color: #f26522;
+}
+
+.border.on{
+	border-color: #005aab;
+}
+
+.border.white{
+	border-color: white;
+}
+
+.rounded{
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+}
+
+.button{
+	padding: 10px 15px;
+	@include inline-block;
+}
+
+.button.filled{
+	background-color: white;
+	color: #3aa1d3;
+	font-weight: 500;
+}
+
+.splash{
+
+	.content{
+		position: absolute;
+		width: 100%;
+		top: 50%;
+		height: 250px;
+		margin-top: -125px;
+	}
+
+	h1{
+		text-align: center;
+		font-weight: bold;
+		font-size: 48px;
+		margin-bottom: 20px;
+	}
+
+	h2{
+		text-align: center;
+		margin-top: 20px
+	}
+
+	ul{ 
+		margin: 0 auto;
+		display: block;
+		width: 100%;
+		text-align: center;
+		li{
+			@include inline-block;
+			margin: 0 5px;
+		}
+	}
+
+	.logo{
+		width: 108px;
+		height: 108px;
+		display: block;
+	}
+}
