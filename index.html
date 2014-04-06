@@ -9,46 +9,124 @@
     <script src="js/jquery-2.1.0.min.js"></script>
     <script src="js/proj4js-combined.js"></script>
     <script src="js/jquery.csv-0.71.min.js"></script>
-    <!--<script src="js/elections.js"></script>-->
     
     <!--[if IE]>
         <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 </head>
 
-<body class="splash">
+<body class="main">
 
-	<section class="content">
-		<h1>QCElections.ca</h1>
-		<ul>
-			<li>
-				<span class="logo rounded drkgb border qs">
-					<img class="rounded" src="img/logos/qs.png" alt="Québec Solidaire" />
-				</span>
-			</li>
-			<li>
-				<span class="logo rounded drkgb border on">
-					<img class="rounded" src="img/logos/on.png" alt="Option Nationale" />
-				</span>
-			</li>
-			<li>
-				<span class="logo rounded drkgb border pq">
-					<img class="rounded" src="img/logos/pq.png" alt="Parti Québecois" />
-				</span>
-			</li>
-			<li>
-				<span class="logo rounded drkgb border caq">
-					<img class="rounded" src="img/logos/caq.png" alt="Coalition Avenir Québec" />
-				</span>
-			</li>
-			<li>
-				<span class="logo rounded drkgb border plq">
-					<img class="rounded" src="img/logos/plq.png" alt="Parti Libéral du Québec" />
-				</span>
-			</li>
-		</ul>
-		<h2><span  class="rounded button filled border white">En ligne pour le 7 avril</span></h2>
+	<header>
+		<div class="wrapper cf">
+			<h1>QCElections.ca</h1>
+			<ul class="parties">
+				<li class="rounded fntclr border plq">
+					<span class="abbr">PLQ</span>
+					<span class="seats">14</span>
+				</li>
+				<li class="rounded fntclr border pq">
+					<span class="abbr">PQ</span>
+					<span class="seats">14</span>
+				</li>
+				<li class="rounded fntclr border caq">
+					<span class="abbr">CAQ</span>
+					<span class="seats">14</span>
+				</li>
+				<li class="rounded fntclr border qs">
+					<span class="abbr">QS</span>
+					<span class="seats">14</span>
+				</li>
+				<li class="rounded fntclr border on">
+					<span class="abbr">ON</span>
+					<span class="seats">14</span>
+				</li>
+			</ul>
+		</div>
+	</header>
+	
+	<section class="overview">
+		<div class="wrapper cf">
+			<h2>Québec</h2>
+			<ul>
+				<li>
+					<div class="infos">
+						<h3>Parti <strong>Libéral</strong> du Québec</h3>
+						<span class="leader">Philippe Couillard</span>
+						<span class="rounded button border white">En avance</span>
+						<span class="rounded filled button border white">Élu</span>
+					</div>
+					<span class="box bg border plq rounded">
+						<span class="picture rounded drkgb plq">
+							<img class="rounded" src="img/logos/plq.png" alt="" />
+						</span>
+						<span class="seats">10<span class="visuallyhidden"> sièges</span></span>
+						<span class="advance">+ 10<span class="visuallyhidden"> sièges en avance</span></span>
+					</span>
+				</li>
+				<li>
+					<div class="infos">
+						<h3>Parti <strong>Québecois</strong></h3>
+						<span class="leader">Pauline Marois</span>
+						<span class="rounded button border white">Sortant</span>
+						<span class="rounded filled button border white">Défait</span>
+					</div>
+					<span class="box bg border pq rounded">
+						<span class="picture rounded drkgb pq">
+							<img class="rounded" src="img/logos/pq.png" alt="" />
+						</span>
+						<span class="seats">10<span class="visuallyhidden"> sièges</span></span>
+						<span class="advance">+ 10<span class="visuallyhidden"> sièges en avance</span></span>
+					</span>
+				</li>
+				<li>
+					<div class="infos">
+						<h3>Coalition <strong>Avenir</strong> Québec</h3>
+						<span class="leader">François Legault</span>
+					</div>
+					<span class="box bg border caq rounded">
+						<span class="picture rounded drkgb caq">
+							<img class="rounded" src="img/logos/caq.png" alt="" />
+						</span>
+						<span class="seats">10<span class="visuallyhidden"> sièges</span></span>
+						<span class="advance">+ 10<span class="visuallyhidden"> sièges en avance</span></span>
+					</span>
+				</li>
+				<li>
+					<div class="infos">
+						<h3>Québec <strong>Solidaire</strong></h3>
+						<span class="leader">Françoise David</span>
+					</div>
+					<span class="box bg border qs rounded">
+						<span class="picture rounded drkgb qs">
+							<img class="rounded" src="img/logos/qs.png" alt="" />
+						</span>
+						<span class="seats">10<span class="visuallyhidden"> sièges</span></span>
+						<span class="advance">+ 10<span class="visuallyhidden"> sièges en avance</span></span>
+					</span>
+				</li>
+				<li>
+					<div class="infos">
+						<h3>Option <strong>Nationale</strong></h3>
+						<span class="leader">Sol Zaneti</span>
+					</div>
+					<span class="box bg border on rounded">
+						<span class="picture rounded drkgb on">
+							<img class="rounded" src="img/logos/on.png" alt="" />
+						</span>
+						<span class="seats">10<span class="visuallyhidden"> sièges</span></span>
+						<span class="advance">+ 10<span class="visuallyhidden"> sièges en avance</span></span>
+					</span>
+				</li>
+			</ul>
+			<canvas id="map"></canvas>
+		</div>
 	</section>
 	
+	<footer>
+		<p><a href="#licence">Licence</a> | <a href="http://github.com">Github</a> | <a href="http://twitter.com/paulcoteweb">@paulcoteweb</a></p>
+	</footer>
+	
+	<script src="js/elections.js"></script>
 </body>
 </html>

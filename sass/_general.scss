@@ -1,0 +1,165 @@
+body{
+	background-color: #3aa1d3;
+	color: white;
+	font-family: Roboto, sans-serif;
+	font-size: 18px;
+}
+
+img{
+	max-width: 100%;
+}
+
+a{
+	&, &:hover, &:visited{
+		color: white;
+		text-decoration: none;
+	}
+	&:hover{
+		text-decoration: underline
+	}
+}
+
+/* Hide only visually, but have it available for screenreaders: h5bp.com/v */
+.visuallyhidden { border: 0; clip: rect(0 0 0 0); height: 1px; margin: -1px; overflow: hidden; padding: 0; position: absolute; width: 1px; }
+
+/* Extends the .visuallyhidden class to allow the element to be focusable when navigated to via the keyboard: h5bp.com/p */
+.visuallyhidden.focusable:active, .visuallyhidden.focusable:focus { clip: auto; height: auto; margin: 0; overflow: visible; position: static; width: auto; }
+
+/**
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    contenteditable attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that are clearfixed.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+.cf:before,
+.cf:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.cf:after {
+    clear: both;
+}
+
+/**
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+.cf {
+    *zoom: 1;
+}
+
+.wrapper{
+	//max-width: 1200px;
+	padding: 0 4vw;
+	margin: 0 auto;
+	position: relative;
+}
+
+.bg.plq{
+	background-color: #ed1b2e;
+}
+
+.bg.pq{
+	background-color: #2b7dab;
+}
+
+.bg.caq{
+	background-color: #00b3ef;
+}
+
+.bg.qs{
+	background-color: #f26522;
+}
+
+.bg.on{
+	background-color: #005aab;
+}
+
+.drkgb.plq{
+	background-color: #ad1422;
+}
+
+.drkgb.pq{
+	background-color: #359ad3;
+}
+
+.drkgb.caq{
+	background-color: #008fbf;
+}
+
+.drkgb.qs{
+	background-color: #bc4e1a;
+}
+
+.drkgb.on{
+	background-color: #004079;
+}
+
+.border{
+	border-width: 0.2vw;
+	border-style: solid;
+}
+
+.border.plq{
+	border-color: #ed1b2e;
+}
+
+.border.pq{
+	border-color: #2b7dab;
+}
+
+.border.caq{
+	border-color: #00b3ef;
+}
+
+.border.qs{
+	border-color: #f26522;
+}
+
+.border.on{
+	border-color: #005aab;
+}
+
+.border.white{
+	border-color: white;
+}
+
+.fntclr.plq{
+	color: #ed1b2e;
+}
+
+.fntclr.pq{
+	color: #2b7dab;
+}
+
+.fntclr.caq{
+	color: #00b3ef;
+}
+
+.fntclr.qs{
+	color: #f26522;
+}
+
+.fntclr.on{
+	color: #005aab;
+}
+
+.rounded{
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+}
+
+.button{
+	padding: 7px 12px;
+	@include inline-block;
+}
+
+.button.filled{
+	background-color: white;
+	color: #3aa1d3;
+	font-weight: 500;
+}

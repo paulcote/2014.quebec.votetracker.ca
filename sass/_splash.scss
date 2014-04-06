@@ -1,0 +1,39 @@
+.splash{
+
+	.content{
+		position: absolute;
+		width: 100%;
+		top: 50%;
+		height: 250px;
+		margin-top: -125px;
+	}
+
+	h1{
+		text-align: center;
+		font-weight: bold;
+		font-size: 48px;
+		margin-bottom: 20px;
+	}
+
+	h2{
+		text-align: center;
+		margin-top: 20px
+	}
+
+	ul{ 
+		margin: 0 auto;
+		display: block;
+		width: 100%;
+		text-align: center;
+		li{
+			@include inline-block;
+			margin: 0 5px;
+		}
+	}
+
+	.logo{
+		width: 108px;
+		height: 108px;
+		display: block;
+	}
+}

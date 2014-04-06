@@ -407,6 +407,8 @@ function drawPolygonFeatures( features, minX, maxX, minY, maxY, id )
 	var context = c_canvas.getContext("2d");
 	//context.scale(2, 2)
 	c_canvas.width = c_canvas.width;
+	//c_canvas.width = $('#map').width();
+	//c_canvas.height = $('#map').height();
 	var multiFactor = Math.min( c_canvas.width / ( maxX - minX ), c_canvas.height / ( maxY - minY ) );
 	var x = 0; var y = 0;
 	for ( var featureNum in features ) {
@@ -451,6 +453,7 @@ function drawPolygonFeatures( features, minX, maxX, minY, maxY, id )
 		context.closePath();
 	}
 	
+	/*
 	if(id){
 		c_canvas = document.getElementById( "map2" );
 		context = c_canvas.getContext("2d");
@@ -490,7 +493,7 @@ function drawPolygonFeatures( features, minX, maxX, minY, maxY, id )
 		context.strokeStyle = "#fff";
 		context.stroke();
 		context.closePath();
-	}
+	}*/
 }
 
 function getRandomColor() {
@@ -545,7 +548,7 @@ $(function() {
 	loadParties("data/partispolitiques.csv");
 	loadPartiesColors("http://elections.paulcote.net/data/colors.json");
 	loadCandidates("data/liste_candidat.csv");
-	//projectPolygonFeatures(districts);
+	projectPolygonFeatures(districts);
 					
 	setTimeout(function(){
 		console.log('Results loaded');

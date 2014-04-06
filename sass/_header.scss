@@ -1,0 +1,37 @@
+body > header{
+	background-color: #1f3042;
+	padding: 1vw;
+	
+	h1{
+		font-weight: bold;
+		font-size: 2.8vw;
+		@include inline-block;
+		line-height: 3vw;
+	}
+	
+	.parties{
+		float: right;
+		margin-top: 0.2vw;
+		width: 70%;
+		text-align: right;
+		li{
+			@include inline-block;
+			width: 7vw;
+			padding: 0.8vw 0; 
+			margin-left: 0.8vw;
+			margin-bottom: 0.4vw;
+			text-align: left;
+			.abbr, .seats{
+				font-size: 1.5vw;
+				margin-left: 0.4vw;
+				font-weight: 300;
+				text-align: left;
+			}
+			.seats{
+				float: right;
+				margin-right: 0.4em;
+				font-weight: 500;
+			}
+		}
+	}
+}

@@ -65,6 +65,92 @@ img {
   max-width: 100%;
 }
 
+a, a:hover, a:visited {
+  color: white;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* Hide only visually, but have it available for screenreaders: h5bp.com/v */
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+/* Extends the .visuallyhidden class to allow the element to be focusable when navigated to via the keyboard: h5bp.com/p */
+.visuallyhidden.focusable:active, .visuallyhidden.focusable:focus {
+  clip: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  position: static;
+  width: auto;
+}
+
+/**
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    contenteditable attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that are clearfixed.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+.cf:before, .overview ul li:before,
+.cf:after,
+.overview ul li:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
+}
+
+.cf:after, .overview ul li:after {
+  clear: both;
+}
+
+/**
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+.cf, .overview ul li {
+  *zoom: 1;
+}
+
+.wrapper {
+  padding: 0 4vw;
+  margin: 0 auto;
+  position: relative;
+}
+
+.bg.plq {
+  background-color: #ed1b2e;
+}
+
+.bg.pq {
+  background-color: #2b7dab;
+}
+
+.bg.caq {
+  background-color: #00b3ef;
+}
+
+.bg.qs {
+  background-color: #f26522;
+}
+
+.bg.on {
+  background-color: #005aab;
+}
+
 .drkgb.plq {
   background-color: #ad1422;
 }
@@ -86,7 +172,7 @@ img {
 }
 
 .border {
-  border-width: 3px;
+  border-width: 0.2vw;
   border-style: solid;
 }
 
@@ -112,6 +198,26 @@ img {
 
 .border.white {
   border-color: white;
+}
+
+.fntclr.plq {
+  color: #ed1b2e;
+}
+
+.fntclr.pq {
+  color: #2b7dab;
+}
+
+.fntclr.caq {
+  color: #00b3ef;
+}
+
+.fntclr.qs {
+  color: #f26522;
+}
+
+.fntclr.on {
+  color: #005aab;
 }
 
 .rounded {
@@ -171,4 +277,164 @@ img {
   width: 108px;
   height: 108px;
   display: block;
+}
+
+body > header {
+  background-color: #1f3042;
+  padding: 1vw;
+}
+body > header h1 {
+  font-weight: bold;
+  font-size: 2.8vw;
+  display: -moz-inline-stack;
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  zoom: 1;
+  *display: inline;
+  line-height: 3vw;
+}
+body > header .parties {
+  float: right;
+  margin-top: 0.2vw;
+  width: 70%;
+  text-align: right;
+}
+body > header .parties li {
+  display: -moz-inline-stack;
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  zoom: 1;
+  *display: inline;
+  width: 7vw;
+  padding: 0.8vw 0;
+  margin-left: 0.8vw;
+  margin-bottom: 0.4vw;
+  text-align: left;
+}
+body > header .parties li .abbr, body > header .parties li .seats {
+  font-size: 1.5vw;
+  margin-left: 0.4vw;
+  font-weight: 300;
+  text-align: left;
+}
+body > header .parties li .seats {
+  float: right;
+  margin-right: 0.4em;
+  font-weight: 500;
+}
+
+.overview canvas {
+  position: absolute;
+  top: 8vw;
+  right: 0;
+  width: 50%;
+  height: 80%;
+  background-color: blue;
+}
+.overview h2 {
+  font-size: 3.5vw;
+  margin: 2vw 0;
+  margin-left: 14.5vw;
+}
+.overview ul li {
+  display: block;
+  margin-bottom: 2vw;
+  padding-left: 2.7vw;
+}
+.overview ul li span, .overview ul li div {
+  display: -moz-inline-stack;
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  zoom: 1;
+  *display: inline;
+}
+.overview ul li .infos h3 {
+  font-size: 2vw;
+  font-weight: 300;
+  margin-bottom: 5px;
+}
+.overview ul li .infos h3 strong {
+  font-weight: 500;
+}
+.overview ul li .infos .leader {
+  font-size: 1.3vw;
+  font-weight: 300;
+  margin-top: -0.2vw;
+  margin-bottom: 0.5vw;
+  display: block;
+}
+.overview ul li .infos .button {
+  font-weight: 300;
+  font-size: 1vw;
+  padding: 0.3vw 0.7vw;
+  border-width: 2px;
+}
+.overview ul li .infos .button.filled {
+  font-weight: normal;
+}
+.overview ul li .box {
+  width: 10.4vw;
+  float: left;
+  margin-right: 20px;
+}
+.overview ul li .box .seats {
+  font-size: 2.2vw;
+  font-weight: bold;
+  display: block;
+  text-align: right;
+  margin-top: 5px;
+}
+.overview ul li .box .advance {
+  font-size: 1.7vw;
+  display: block;
+  text-align: right;
+  margin-top: 1vw;
+}
+.overview ul li .box .picture {
+  width: 5.2vw;
+  float: right;
+  margin-left: 10px;
+}
+.overview ul li:first-child {
+  padding-left: 0;
+}
+.overview ul li:first-child .box {
+  width: 13vw;
+}
+.overview ul li:first-child .box .seats {
+  font-size: 2.8vw;
+}
+.overview ul li:first-child .box .advance {
+  font-size: 2vw;
+  margin-top: 10px;
+}
+.overview ul li:first-child .box .advance:after {
+  content: "en avance";
+  font-size: 1.1vw;
+  display: block;
+  font-weight: 300;
+  margin-top: -5px;
+}
+.overview ul li:first-child .box .picture {
+  width: 7vw;
+}
+.overview ul li:first-child .infos h3 {
+  font-size: 2.7vw;
+}
+.overview ul li:first-child .infos .leader {
+  font-size: 1.7vw;
+  margin-top: -0.4vw;
+  margin-bottom: 0.9vw;
+}
+.overview ul li:first-child .infos .button {
+  font-size: 1.3vw;
+}
+
+footer p {
+  font-size: 15px;
+  text-align: right;
+  padding: 0 20px 20px 0;
 }
