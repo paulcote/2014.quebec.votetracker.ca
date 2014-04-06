@@ -45,37 +45,74 @@ function loadRegionsFromKML(file){
 				var ring = new Array();
 				var coordsText = $( this ).find( 'LinearRing' ).find( 'coordinates' ).text();
 				var coordStrings = coordsText.split( ' ' );
-				var index = 0;
+				var indexRing = 0;
 				for ( var coordText in coordStrings ) {
 					var coordinate = new Array();
 					var coordSplit = coordStrings[ coordText ].split( ',' );
-					if(index % 2 == 0){
-    					if ( coordSplit.length == 2 ) {
-    						for ( var coordInd in coordSplit ) {
-    							coordinate.push( Number( coordSplit[ coordInd ] ).toFixed(4) );
-    						}
-    						ring.push( coordinate );
-    					}
-    					else if ( coordSplit.length == 3 ) {
-    						coordSplit.pop();
-    						for ( var coordInd in coordSplit ) {
-    							coordinate.push( Number( coordSplit[ coordInd ] ).toFixed(4) );
-    						}
-    						ring.push( coordinate );
-    					}
+					if(indexRing % 3 == 0){
+						if ( coordSplit.length == 2 ) {
+							for ( var coordInd in coordSplit ) {
+								coordinate.push( Number( coordSplit[ coordInd ] ) );
+							}
+							ring.push( coordinate );
+						}
+						else if ( coordSplit.length == 3 ) {
+							coordSplit.pop();
+							for ( var coordInd in coordSplit ) {
+								coordinate.push( Number( coordSplit[ coordInd ] ) );
+							}
+							ring.push( coordinate );
+						}
 					}
+					indexRing++;
 				}
 				rings.push( ring );
 			} );
 			
 			var district = findDistrictByName(name);
-
+			
+			if(!districts[district.id]){
+				var stop = 1;
+				console.log(name);
+			}
+			else{
+				districts[district.id].rings = new Array();
+				districts[district.id].rings = rings;
+			}
+			
 			regions[district.id] = new Object();
 			regions[district.id].rings = new Array();
 			regions[district.id].rings = rings;
+		});
+	}});
+}
 
-			districts[district.id].rings = new Array();
-			districts[district.id].rings = rings;
+function loadRegionsFromJSON(file, callback){
+	$.ajax( file ,{async:false, success: function( json ) {
+		var my_lzma = new LZMA("js/vendor/lzmajs/src/lzma_worker.js");
+		my_lzma.decompress(json, function(result) {
+			
+			var regions = JSON.parse(result);
+			
+			var arr = regions,
+			    len, i;
+			
+			for (i = 0, len = arr.length; i < len; i++) {
+				var rings = arr[i].rings;
+				
+				districts[i].rings = rings;
+			}
+			
+			callback();
+		
+		}, function(percent) {
+			if(Math.ceil(percent*100) == 100){
+				$('.percent-load').text("99%");
+			}
+			else{
+				$('.percent-load').text(Math.ceil(percent*100)+"%");
+			}
+		
 		});
 	}});
 }
@@ -368,19 +405,19 @@ function findPartyByName(name){
 	}
 }
 
-function projectPolygonFeatures( features, id ) 
+function showMap( districtsMap, map ) 
 {
 	var projectedFeatures = new Array();
 	var minX = Infinity;
 	var maxX = -Infinity;
 	var minY = Infinity;
 	var maxY = -Infinity;
-	for ( var featureNum in features ) {
+	for ( var featureNum in districtsMap ) {
 		var projectedFeature = new Array();
 		var projectedRings = new Array();
-		for ( var ringNum in features[ featureNum ].rings) {
+		for ( var ringNum in districtsMap[ featureNum ].rings) {
 			var projectedRing = new Array();
-			var ring = features[ featureNum ].rings[ ringNum ];
+			var ring = districtsMap[ featureNum ].rings[ ringNum ];
 			var pt = new Proj4js.Point();
 			for ( var coordNum in ring ) {
 				var coord = ring[ coordNum ];
@@ -398,28 +435,28 @@ function projectPolygonFeatures( features, id )
 		projectedFeature.rings = projectedRings;
 		projectedFeatures.push( projectedFeature );
 	}
-	drawPolygonFeatures( features, minX, maxX, minY, maxY, id );
+	drawMap( districtsMap, minX, maxX, minY, maxY, map );
 }
 
-function drawPolygonFeatures( features, minX, maxX, minY, maxY, id ) 
+function drawMap( districtsMap, minX, maxX, minY, maxY, map ) 
 {
-	var c_canvas = document.getElementById( "map" );
+	var c_canvas = $(map).get(0);
 	var context = c_canvas.getContext("2d");
 	//context.scale(2, 2)
-	c_canvas.width = c_canvas.width;
-	//c_canvas.width = $('#map').width();
-	//c_canvas.height = $('#map').height();
+	//c_canvas.width = c_canvas.width;
+	c_canvas.width = $(map).width();
+	c_canvas.height = $(map).height();
 	var multiFactor = Math.min( c_canvas.width / ( maxX - minX ), c_canvas.height / ( maxY - minY ) );
 	var x = 0; var y = 0;
-	for ( var featureNum in features ) {
+	for ( var featureNum in districtsMap ) {
 		
 		context.beginPath();
 		
 		var minHeight = Infinity, maxHeight = 0,
 			minWidth = Infinity, maxWidth = 0;
 		
-		for ( var ringNum in features[ featureNum ].rings ) {
-			var ring = features[ featureNum ].rings[ ringNum ];
+		for ( var ringNum in districtsMap[ featureNum ].rings ) {
+			var ring = districtsMap[ featureNum ].rings[ ringNum ];
 			context.moveTo( ( ring[ 0 ][ 0 ] - minX ) * multiFactor, c_canvas.height - ( ring[ 0 ][ 1 ] - minY ) * multiFactor );						
 			for ( var coordNum = 1; coordNum < ring.length; coordNum++ ) {
 				x = ( ring[ coordNum ][ 0 ] - minX ) * multiFactor;
@@ -437,14 +474,11 @@ function drawPolygonFeatures( features, minX, maxX, minY, maxY, id )
 			}
 		}
 		
-		if(id){
-			context.fillStyle = ColorLuminance(features[featureNum].color,-0.8);
+		if(districtsMap.length > 1){
+			context.fillStyle = districtsMap[featureNum].color;
 		}
-		else{
-			var grd=context.createLinearGradient(minWidth,minHeight,minWidth,maxHeight);
-			grd.addColorStop(0,features[featureNum].color);
-			grd.addColorStop(1,ColorLuminance(features[featureNum].color,-0.5));
-			context.fillStyle = grd;
+		else {
+			context.fillStyle = "#fff";
 		}
 		
 		context.fill();
@@ -452,48 +486,6 @@ function drawPolygonFeatures( features, minX, maxX, minY, maxY, id )
 		context.stroke();
 		context.closePath();
 	}
-	
-	/*
-	if(id){
-		c_canvas = document.getElementById( "map2" );
-		context = c_canvas.getContext("2d");
-		c_canvas.width = c_canvas.width;
-		multiFactor = Math.min( c_canvas.width / ( maxX - minX ), c_canvas.height / ( maxY - minY ) );
-		x = 0; 
-		y = 0;
-		
-		var minHeight = Infinity, maxHeight = 0,
-			minWidth = Infinity, maxWidth = 0;
-		
-		for ( var ringNum in features[ id ].rings ) {
-			var ring = features[ id ].rings[ ringNum ];
-			context.moveTo( ( ring[ 0 ][ 0 ] - minX ) * multiFactor, c_canvas.height - ( ring[ 0 ][ 1 ] - minY ) * multiFactor );						
-			for ( var coordNum = 1; coordNum < ring.length; coordNum++ ) {
-				x = ( ring[ coordNum ][ 0 ] - minX ) * multiFactor;
-				y = c_canvas.height - ( ring[ coordNum ][ 1 ] - minY ) * multiFactor;
-				context.lineTo( x, y );
-				
-				if(x < minWidth)
-					minWidth = x;
-				if(x > maxWidth)
-					maxWidth = x;
-				if(y < minHeight)
-					minHeight = y;
-				if(y > maxHeight)
-					maxHeight = y;
-			}
-		}
-		
-		
-		var grd=context.createLinearGradient(minWidth,minHeight,minWidth,maxHeight);
-		grd.addColorStop(0,features[id].color);
-		grd.addColorStop(1,ColorLuminance(features[id].color,-0.5));
-		context.fillStyle = grd;
-		context.fill();
-		context.strokeStyle = "#fff";
-		context.stroke();
-		context.closePath();
-	}*/
 }
 
 function getRandomColor() {
@@ -541,19 +533,27 @@ function print(obj, maxDepth, prefix){
    }
    return result;
 }
-
+var my_lzma = null;
 $(function() {
-	loadDisctricts("data/liste_circonscription.csv");
-	loadRegionsFromKML("data/carte2011.kml");
-	loadParties("data/partispolitiques.csv");
-	loadPartiesColors("http://elections.paulcote.net/data/colors.json");
-	loadCandidates("data/liste_candidat.csv");
-	projectPolygonFeatures(districts);
-					
+	my_lzma = new LZMA("js/vendor/lzmajs/src/lzma_worker.js");
+
 	setTimeout(function(){
-		console.log('Results loaded');
-		//loadPartiesResults("data/partispolitiques.csv");
-		//loadCandidatesResults("data/candidats.csv");
-		loadResults("http://elections.paulcote.net/data/resultats.json");
-	}, 5000);
+		loadDisctricts("data/liste_circonscription.csv");
+		loadParties("data/partispolitiques.csv");
+		loadPartiesColors("data/colors.json");
+		loadCandidates("data/liste_candidat.csv");
+		loadRegionsFromJSON("data/regions.json",function(){
+			showMap(districts,$('.o1 canvas'));
+			showMap([districts[1]],$('.d1 canvas'));
+			$('.percent-load').text("100%");
+			$('body').removeClass('loading');
+							
+			setTimeout(function(){
+				console.log('Results loaded');
+				//loadPartiesResults("data/partispolitiques.csv");
+				//loadCandidatesResults("data/candidats.csv");
+				loadResults("data/resultats.json");
+			}, 5000);
+		});
+	}, 1000);
 });

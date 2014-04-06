@@ -104,16 +104,17 @@ a:hover {
  * 2. The use of `table` rather than `block` is only necessary if using
  *    `:before` to contain the top-margins of child elements.
  */
-.cf:before, .overview ul li:before,
+.cf:before, .overview ul li:before, .district ul li:before,
 .cf:after,
-.overview ul li:after {
+.overview ul li:after,
+.district ul li:after {
   content: " ";
   /* 1 */
   display: table;
   /* 2 */
 }
 
-.cf:after, .overview ul li:after {
+.cf:after, .overview ul li:after, .district ul li:after {
   clear: both;
 }
 
@@ -121,7 +122,7 @@ a:hover {
  * For IE 6/7 only
  * Include this rule to trigger hasLayout and contain floats.
  */
-.cf, .overview ul li {
+.cf, .overview ul li, .district ul li {
   *zoom: 1;
 }
 
@@ -234,19 +235,56 @@ a:hover {
   zoom: 1;
   *display: inline;
 }
-
 .button.filled {
   background-color: white;
   color: #3aa1d3;
   font-weight: 500;
 }
+.button.offset-left {
+  margin-left: -6px;
+}
 
-.splash .content {
-  position: absolute;
+section {
+  opacity: 0;
+  -webkit-transition: opacity 1s;
+  transition: opacity 1s;
+  z-index: 100;
+}
+
+section.active {
+  z-index: 120;
+  opacity: 1;
+}
+
+section.next {
+  z-index: 130;
+}
+
+section.next.active {
+  z-index: 150;
+}
+
+header, section:not(.splash), footer {
+  opacity: 1;
+  -webkit-transition: opacity 2s;
+  /* For Safari 3.1 to 6.0 */
+  transition: opacity 2s;
+}
+
+.loading header, .loading section:not(.splash), .loading footer {
+  opacity: 0;
+}
+.loading .splash {
+  opacity: 1;
+}
+
+.splash {
+  position: fixed;
   width: 100%;
   top: 50%;
   height: 250px;
   margin-top: -125px;
+  opacity: 0;
 }
 .splash h1 {
   text-align: center;
@@ -328,10 +366,9 @@ body > header .parties li .seats {
 .overview canvas {
   position: absolute;
   top: 8vw;
-  right: 0;
+  right: 1vw;
   width: 50%;
   height: 80%;
-  background-color: blue;
 }
 .overview h2 {
   font-size: 3.5vw;
@@ -341,7 +378,7 @@ body > header .parties li .seats {
 .overview ul li {
   display: block;
   margin-bottom: 2vw;
-  padding-left: 2.7vw;
+  padding-left: 2vw;
 }
 .overview ul li span, .overview ul li div {
   display: -moz-inline-stack;
@@ -376,7 +413,7 @@ body > header .parties li .seats {
   font-weight: normal;
 }
 .overview ul li .box {
-  width: 10.4vw;
+  width: 12vw;
   float: left;
   margin-right: 20px;
 }
@@ -394,7 +431,7 @@ body > header .parties li .seats {
   margin-top: 1vw;
 }
 .overview ul li .box .picture {
-  width: 5.2vw;
+  width: 5.5vw;
   float: right;
   margin-left: 10px;
 }
@@ -402,7 +439,7 @@ body > header .parties li .seats {
   padding-left: 0;
 }
 .overview ul li:first-child .box {
-  width: 13vw;
+  width: 14vw;
 }
 .overview ul li:first-child .box .seats {
   font-size: 2.8vw;
@@ -430,6 +467,117 @@ body > header .parties li .seats {
   margin-bottom: 0.9vw;
 }
 .overview ul li:first-child .infos .button {
+  font-size: 1.3vw;
+}
+
+.district canvas {
+  float: left;
+  width: 14.2vw;
+  height: 10.4vw;
+  margin-right: 20px;
+}
+.district .details {
+  margin: 2vw 0;
+}
+.district .details h2 {
+  font-size: 3.5vw;
+  font-weight: 300;
+  margin-bottom: 1vw;
+}
+.district .details .region {
+  display: block;
+  font-size: 2vw;
+  font-weight: 300;
+  margin-bottom: 1vw;
+}
+.district .details .button {
+  font-size: 1.5vw;
+}
+.district ul li {
+  display: block;
+  margin-bottom: 2vw;
+  padding-left: 2vw;
+}
+.district ul li span, .district ul li div {
+  display: -moz-inline-stack;
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  zoom: 1;
+  *display: inline;
+}
+.district ul li .infos h3 {
+  font-size: 2vw;
+  font-weight: 300;
+  margin-bottom: 5px;
+}
+.district ul li .infos h3 strong {
+  font-weight: 500;
+}
+.district ul li .infos .leader {
+  font-size: 1.3vw;
+  font-weight: 300;
+  margin-top: -0.2vw;
+  margin-bottom: 0.5vw;
+  display: block;
+}
+.district ul li .infos .button {
+  font-weight: 300;
+  font-size: 1vw;
+  padding: 0.3vw 0.7vw;
+  border-width: 2px;
+}
+.district ul li .infos .button.filled {
+  font-weight: normal;
+}
+.district ul li .box {
+  width: 12vw;
+  float: left;
+  margin-right: 20px;
+}
+.district ul li .box .percent {
+  font-size: 2vw;
+  font-weight: normal;
+  display: block;
+  text-align: right;
+  margin-top: 5px;
+}
+.district ul li .box .votes {
+  font-size: 1.4vw;
+  display: block;
+  text-align: right;
+  margin-top: 1vw;
+}
+.district ul li .box .picture {
+  width: 5.5vw;
+  float: right;
+  margin-left: 10px;
+}
+.district ul li:first-child {
+  padding-left: 0;
+}
+.district ul li:first-child .box {
+  width: 14vw;
+}
+.district ul li:first-child .box .percent {
+  font-size: 2.3vw;
+}
+.district ul li:first-child .box .votes {
+  font-size: 1.7vw;
+  margin-top: 2vw;
+}
+.district ul li:first-child .box .picture {
+  width: 7vw;
+}
+.district ul li:first-child .infos h3 {
+  font-size: 2.7vw;
+}
+.district ul li:first-child .infos .leader {
+  font-size: 1.7vw;
+  margin-top: 0vw;
+  margin-bottom: 0.3vw;
+}
+.district ul li:first-child .infos .button {
   font-size: 1.3vw;
 }
 

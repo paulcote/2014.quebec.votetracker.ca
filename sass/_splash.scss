@@ -1,12 +1,10 @@
 .splash{
-
-	.content{
-		position: absolute;
-		width: 100%;
-		top: 50%;
-		height: 250px;
-		margin-top: -125px;
-	}
+	position: fixed;
+	width: 100%;
+	top: 50%;
+	height: 250px;
+	margin-top: -125px;
+	opacity: 0;
 
 	h1{
 		text-align: center;

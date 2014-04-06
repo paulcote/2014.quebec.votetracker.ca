@@ -156,10 +156,49 @@ a{
 .button{
 	padding: 7px 12px;
 	@include inline-block;
+	
+	&.filled{
+		background-color: white;
+		color: #3aa1d3;
+		font-weight: 500;
+	}
+	
+	&.offset-left{
+		margin-left: -6px;
+	}
 }
 
-.button.filled{
-	background-color: white;
-	color: #3aa1d3;
-	font-weight: 500;
+section{
+	opacity: 0;
+	-webkit-transition: opacity 1s;
+    transition: opacity 1s;
+    z-index: 100;
+}
+
+	section.active{
+	    z-index: 120;
+	    opacity: 1;
+	}
+	
+	section.next{
+	    z-index: 130;
+	}
+	
+	section.next.active{
+	    z-index: 150;
+	}
+
+header, section:not(.splash), footer{ 
+	opacity: 1;
+	-webkit-transition: opacity 2s; /* For Safari 3.1 to 6.0 */
+	transition: opacity 2s;
+}
+
+.loading{
+	header, section:not(.splash), footer{ 
+		opacity: 0;
+	}
+	.splash{
+		opacity: 1;
+	}
 }
