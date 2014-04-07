@@ -1,5 +1,7 @@
 .district{
 
+	&.model{ display: none}
+
 	canvas{
 		float: left;
 		width: 14.2vw;
@@ -88,7 +90,7 @@
 			}
 		}
 		
-		li:first-child{
+		&:not(.no-advance) li:first-child{
 			padding-left: 0;
 			.box{
 				width: 14vw;

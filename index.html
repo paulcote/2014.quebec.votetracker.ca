@@ -17,6 +17,47 @@
 </head>
 
 <body class="main loading">
+	
+	<header>
+		<div class="wrapper cf">
+			<h1><a href="#">QCElections.ca</a></h1>
+			<ul class="menu">
+				<li class="districts">
+					<span class="rounded button border white">Circonscriptions</span>
+					<ul class="rounded">
+					</ul>
+				</li>
+				<li class="regions">
+					<span class="rounded button border white">Régions</span>
+					<ul class="rounded">
+						<li class="r-1"><a href="#">Province</a></li>
+					</ul>
+				</li>
+			</ul>
+			<ul class="parties">
+				<li class="rounded fntclr border elected plq">
+					<span class="abbr">PLQ</span>
+					<span class="seats">0</span>
+				</li>
+				<li class="rounded fntclr border pq">
+					<span class="abbr">PQ</span>
+					<span class="seats">0</span>
+				</li>
+				<li class="rounded fntclr border caq">
+					<span class="abbr">CAQ</span>
+					<span class="seats">0</span>
+				</li>
+				<li class="rounded fntclr border qs">
+					<span class="abbr">QS</span>
+					<span class="seats">0</span>
+				</li>
+				<li class="rounded fntclr border on">
+					<span class="abbr">ON</span>
+					<span class="seats">0</span>
+				</li>
+			</ul>
+		</div>
+	</header>
 
 	<section class="splash">
 		<h1>QCElections.ca</h1>
@@ -47,38 +88,10 @@
 				</span>
 			</li>
 		</ul>
-		<h2><span class="rounded button filled border white">Chargement...</span><span class="rounded button offset-left border white percent-load">0%</span></h2>
+		<h2><span class="rounded button filled border white">Chargement<span class="one">.</span><span class="two">.</span><span class="three">.</span>​</span><span class="rounded button offset-left border white percent-load">0%</span></h2>
 	</section>
 	
-	<header>
-		<div class="wrapper cf">
-			<h1>QCElections.ca</h1>
-			<ul class="parties">
-				<li class="rounded fntclr border elected plq">
-					<span class="abbr">PLQ</span>
-					<span class="seats">14</span>
-				</li>
-				<li class="rounded fntclr border pq">
-					<span class="abbr">PQ</span>
-					<span class="seats">14</span>
-				</li>
-				<li class="rounded fntclr border caq">
-					<span class="abbr">CAQ</span>
-					<span class="seats">14</span>
-				</li>
-				<li class="rounded fntclr border qs">
-					<span class="abbr">QS</span>
-					<span class="seats">14</span>
-				</li>
-				<li class="rounded fntclr border on">
-					<span class="abbr">ON</span>
-					<span class="seats">14</span>
-				</li>
-			</ul>
-		</div>
-	</header>
-	
-	<section class="overview o1 active">
+	<section class="overview model">
 		<div class="wrapper cf">
 			<h2>Québec</h2>
 			<ul>
@@ -156,7 +169,7 @@
 		</div>
 	</section>
 	
-	<section class="district d1">
+	<section class="district model">
 		<div class="wrapper cf">
 			<div class="details cf">
 				<canvas></canvas>
@@ -239,7 +252,14 @@
 	</section>
 	
 	<footer>
-		<p><a href="#licence">Licence</a> | <a href="http://github.com/paulcote/qc_2014_elections">Github</a> | <a href="http://twitter.com/paulcoteweb">@paulcoteweb</a></p>
+		<section class="licence">
+			<div class="text">
+				<p>Comprends des données ouvertes octroyées sous la licence d'utilisation des données ouvertes du Directeur général des élections du Québec disponible à l'adresse Web : <a href="http://www.electionsquebec.qc.ca/">www.electionsquebec.qc.ca</a>. L'octroi de la licence n'implique aucune approbation par le Directeur général des élections du Québec de l'utilisation des données ouvertes qui en est faite. </p>
+				<p>Les logos des partis sont la propriété de ceux-ci. Les photos des candidats sont la propriété de leur parti respectif.</p>
+			</div>
+		</section>
+		<p class="maj"><span class="rounded button border white">Mise à jour dans </span><span class="rounded button filled border white offset-left">3m</span></p>
+		<p><a id="licence" href="#licence">Licence</a> | <a href="http://github.com/paulcote/qc_2014_elections">Github</a> | <a href="http://twitter.com/paulcoteweb">@paulcoteweb</a></p>
 	</footer>
 	
 	<script src="js/elections.js"></script>

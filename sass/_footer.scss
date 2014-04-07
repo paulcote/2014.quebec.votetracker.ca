@@ -5,4 +5,50 @@ footer{
 		text-align: right;
 		padding: 0 20px 20px 0;
 	}
+	
+	.one {
+	    opacity: 0;
+	    -webkit-animation: dot 1.3s infinite;
+	    -webkit-animation-delay: 0.0s;
+	    animation-animation: dot 1.3s infinite;
+	    animation-delay: 0.0s;
+	}
+	
+	.two {
+	    opacity: 0;
+	    -webkit-animation: dot 1.3s infinite;
+	    -webkit-animation-delay: 0.2s;
+	    animation-animation: dot 1.3s infinite;
+	    animation-delay: 0.2s;
+	}
+	
+	.three {
+	    opacity: 0;
+	    -webkit-animation: dot 1.3s infinite;
+	    -webkit-animation-delay: 0.3s;
+		animation-animation: dot 1.3s infinite;
+		animation-delay: 0.3s;
+	}
+	
+	.licence{
+		position: fixed;
+		width: 100%;
+		top: 50%;
+		height: 250px;
+		margin-top: -125px;
+		opacity: 1;
+		display: none;
+		
+		.text{
+			width: 50%;
+			margin: 10px auto;
+			background-color: #1f3042;
+			padding: 20px 40px;
+			
+			p{
+				text-align: left;
+				margin: 20px 0;
+			}
+		}
+	}
 }

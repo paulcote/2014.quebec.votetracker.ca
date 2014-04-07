@@ -1,6 +1,4 @@
-var montrealDistricts = "Acadie,Anjou—Louis-Riel,Bourassa-Sauvé,Bourget,Crémazie,D'Arcy-McGee,Gouin,Hochelaga-Maisonneuve,Jacques-Cartier,Jeanne-Mance—Viger,LaFontaine,Laurier-Dorion,Marguerite-Bourgeoys,Marquette,Mercier,Mont-Royal,Nelligan,Notre-Dame-de-Grâce,Outremont,Pointe-aux-Trembles,Robert-Baldwin,Rosemont,Saint-Henri—Sainte-Anne,Saint-Laurent,Sainte-Marie—Saint-Jacques,Verdun,Viau,Westmount—Saint-Louis,Chomedey,Fabre,Laval-des-Rapides,Mille-Îles,Sainte-Rose,Vimont";
-
-var quebecDistricts = "Charlesbourg,Chauveau,Jean-Lesage,Jean-Talon,La Peltrie,Louis-Hébert,Montmorency,Portneuf,Taschereau,Vanier-Les Rivières,Chutes-de-la-Chaudière,Lévis";
+var regions = [{"name" : "Montréal", "districts" : "Acadie,Anjou—Louis-Riel,Bourassa-Sauvé,Bourget,Crémazie,D'Arcy-McGee,Gouin,Hochelaga-Maisonneuve,Jacques-Cartier,Jeanne-Mance—Viger,LaFontaine,Laurier-Dorion,Marguerite-Bourgeoys,Marquette,Mercier,Mont-Royal,Nelligan,Notre-Dame-de-Grâce,Outremont,Pointe-aux-Trembles,Robert-Baldwin,Rosemont,Saint-Henri—Sainte-Anne,Saint-Laurent,Sainte-Marie—Saint-Jacques,Verdun,Viau,Westmount—Saint-Louis,Chomedey,Fabre,Laval-des-Rapides,Mille-Îles,Sainte-Rose,Vimont"},{"name" : "Québec", "districts" : "Charlesbourg,Chauveau,Jean-Lesage,Jean-Talon,La Peltrie,Louis-Hébert,Montmorency,Portneuf,Taschereau,Vanier-Les Rivières,Chutes-de-la-Chaudière,Lévis"}];
 
 var districts = new Array();
 
@@ -29,8 +27,6 @@ function loadDisctricts(file){
 	}});
 		
 }
-
-var regions = new Array();
 
 function loadRegionsFromKML(file){
 	$.ajax( file ,{async:false, success: function( xml ) {
@@ -79,10 +75,6 @@ function loadRegionsFromKML(file){
 				districts[district.id].rings = new Array();
 				districts[district.id].rings = rings;
 			}
-			
-			regions[district.id] = new Object();
-			regions[district.id].rings = new Array();
-			regions[district.id].rings = rings;
 		});
 	}});
 }
@@ -177,6 +169,7 @@ function loadCandidates(file){
 			candidate.lastname = csvCandidate[4];
 			candidate.firstname = csvCandidate[5];
 			candidate.incumbent = (csvCandidate[10] == 'O' ? true : false);
+			candidate.sex = csvCandidate[3]
 			candidate.nbVotes = 0;
 			candidate.nbVotesPercent = 0;
 			
@@ -288,7 +281,7 @@ function loadCandidatesResults(file){
 	}});
 }
 
-function loadResults(file){
+function loadResults(file, callback){
 	$.ajax( file ,{async:false, success: function( json ) {
 	
 		var arr = json.circonscriptions,
@@ -335,6 +328,34 @@ function loadResults(file){
 			if(mostVotes != 0)
 				districts[district.id].color = parties[winningParty].color;
 		}
+		
+		var arr = districts,
+		    len, i;
+		
+		for (i = 0, len = arr.length; i < len; i++) {
+			var district = districts[i];
+			var candidates = district.candidates;
+			
+			if(candidates){
+				candidates.sort(function(x, y){ 
+					if(x.nbVotes == y.nbVotes){
+						if(x.incumbent){
+							return -1;
+						}
+						else{
+							return 0;
+						}
+					}
+					return x.nbVotes > y.nbVotes 
+				});
+				
+				districts[i].candidates = candidates;
+			}
+			
+		}
+		
+		if(callback)
+			callback();
 		
 	}});
 }
@@ -533,9 +554,336 @@ function print(obj, maxDepth, prefix){
    }
    return result;
 }
-var my_lzma = null;
+
+var basicPartiesAbbr = ['plqqlp','plq','pq','caq','caqefl','on','onpiq','qs'];
+
+function createDistrictScreen(id){
+
+	$('.overview:not(.model), .district:not(.model)').remove();
+	
+	var district = districts[id];
+
+	var districtScreen = $(".district.model").clone();
+	districtScreen.removeClass('model').addClass('active').addClass('d'+id);
+	districtScreen.find('h2').text(district.name);
+	districtScreen.find('.details .button').remove();
+	
+	var arr2 = district.candidates,
+	    len, i;
+	
+	var candidatesOutput = '';
+	for (ci = 0, len = arr2.length; ci < len; ci++) {
+		var candidate = district.candidates[ci];
+		
+		var partyAbbr = parties[candidate.party].abbr.toLowerCase().replace('é','e').replace(/[^a-zA-Z0-9]/g,'');
+		if(basicPartiesAbbr.indexOf(partyAbbr) == -1){
+			partyAbbr = 'otr';
+		}
+		
+		candidatesOutput += '<li>';
+			candidatesOutput += '<div class="infos">';
+				candidatesOutput += '<h3>'+candidate.firstname+' <strong>'+candidate.lastname+'</strong></h3>';
+				candidatesOutput += '<span class="leader">'+parties[candidate.party].name+'</span>';
+				if(candidate.incumbent)
+					candidatesOutput += '<span class="rounded button border white">Sortant</span>';
+				if(ci == 0 && district.pollsReported != 0 && district.votes > 0)
+					candidatesOutput += '<span class="rounded button border white">En avance</span>';
+				else if(ci == 0 && candidate.incumbent && district.pollsReported == district.pollsTotal && district.votes > 0)
+					candidatesOutput += '<span class="rounded filled button border white">Rélu'+(candidate.sex == 'F'?'e':'')+'</span>';
+				else if(ci == 0 && district.pollsReported == district.pollsTotal && district.votes > 0)
+					candidatesOutput += '<span class="rounded filled button border white">Élu'+(candidate.sex == 'F'?'e':'')+'</span>';
+			candidatesOutput += '</div>';
+			candidatesOutput += '<span class="box bg border '+partyAbbr+' rounded">';
+				candidatesOutput += '<span class="picture rounded drkgb '+partyAbbr+'">';
+					candidatesOutput += '<img class="rounded" src="img/logos/'+partyAbbr+'.png" alt="" />';
+				candidatesOutput += '</span>';
+				candidatesOutput += '<span class="percent">'+(candidate.nbVotesPercent*100)+'%</span>';
+				candidatesOutput += '<span class="votes">'+candidate.nbVotes.toString().replace(/(\d)(?=(\d{3})+$)/g, '$1 ')+'<span class="visuallyhidden"> votes</span></span>';
+			candidatesOutput += '</span>';
+		candidatesOutput += '</li>';
+	}
+	districtScreen.find('ul').html(candidatesOutput);
+	
+	if(district.final){
+		districtScreen.find('.details').append('<span class="rounded filled button border white">Résultats finaux</span>');
+	}
+	else if(district.pollsReported == 0){
+		districtScreen.find('.details').append('<span class="rounded button border white">Aucune données</span>');
+	}
+	else if(district.pollsReported != 0 && district.pollsReported != district.pollsTotal){
+		districtScreen.find('.details').append('<span class="rounded button border white">En dépouillement</span><span class="rounded button filled border white offset-left">'+Math.floor(district.pollsReported/district.pollsTotal*100)+'%</span>');
+	}
+	else if(district.pollsReported != 0 && district.pollsReported == district.pollsTotal){
+		districtScreen.find('.details').append('<span class="rounded button border white">Résultats non officiels</span>');
+	}
+	
+	if(!district.votes > 0){
+		districtScreen.find('ul').addClass('no-advance');
+	}
+	
+	districtScreen.insertAfter(".district:last");
+	showMap([district],districtScreen.find('canvas'));
+}
+
+
+function createOverviewScreen(id){
+
+	$('.overview:not(.model), .district:not(.model)').remove();
+	
+	if(id != -1){
+		var region = regions[id];
+		var districtsScreen = getSubsetDistricts(region.districts);
+	}
+	else {
+		var region = {};
+		region.name = "Québec";
+		var districtsScreen = districts;
+	}
+
+	var overviewScreen = $(".overview.model").clone();
+	overviewScreen.removeClass('model').addClass('active').addClass('r'+id);
+	overviewScreen.find('h2').text(region.name);
+	overviewScreen.find('.details .button').remove();
+	
+	var countParties = [];
+	var arr = districtsScreen,
+	    len, i;
+	
+	for (i = 0, len = arr.length; i < len; i++) {
+		var district = districtsScreen[i];
+		
+		if(!countParties[district.candidates[0].party]){
+			countParties[district.candidates[0].party] = {};
+			countParties[district.candidates[0].party].id = district.candidates[0].party;
+			countParties[district.candidates[0].party].won = 0;
+			countParties[district.candidates[0].party].advance = 0;
+		}
+		
+		if(district.final || district.pollsReported == district.pollsTotal){
+			countParties[district.candidates[0].party].won++;
+		}
+		else if(district.noVotes > 0){
+			countParties[district.candidates[0].party].advance++;
+		}
+	}
+	
+	var candidatesOutput = '';
+	
+	countParties.sort(function(x, y){ 
+		if((x.won+x.advance) == (y.won+y.advance)){
+			if(x.won == y.won){
+				if(x.advance == y.advance){
+					return 0;
+				}
+				else{
+					return (x.advance) > (y.advance);
+				}
+			}
+			else{
+				return (x.won) > (y.won);
+			}
+		}
+		return (x.won+x.advance) > (y.won+y.advance)
+	});
+	
+	var arr = countParties,
+	    len, i;
+	
+	for (i = 0, len = arr.length; i < len; i++) {
+	  	var partyCount = countParties[i];
+		
+		if(typeof partyCount !== "undefined"){
+			var partyAbbr = parties[partyCount.id].abbr.toLowerCase().replace('é','e').replace(/[^a-zA-Z0-9]/g,'');
+			if(basicPartiesAbbr.indexOf(partyAbbr) != -1){
+		    	candidatesOutput += '<li>';
+		    		candidatesOutput += '<div class="infos">';
+		    			
+		    			partyName = parties[partyCount.id].name;
+		    			if(partyName.indexOf('-') != -1){
+		    				partyName = partyName.substr(0, partyName.indexOf('-'));
+		    			}
+		    			else if(partyName.indexOf('/') != -1){
+		    				partyName = partyName.substr(0, partyName.indexOf('/'));
+		    			}
+		    		
+		    			candidatesOutput += '<h3>'+partyName+'</h3>';
+		    			//candidatesOutput += '<span class="leader">'+parties[partyCount.id].leader+'</span>';
+		    			
+		    		candidatesOutput += '</div>';
+		    		candidatesOutput += '<span class="box bg border '+partyAbbr+' rounded">';
+		    			candidatesOutput += '<span class="picture rounded drkgb '+partyAbbr+'">';
+		    				candidatesOutput += '<img class="rounded" src="img/logos/'+partyAbbr+'.png" alt="" />';
+		    			candidatesOutput += '</span>';
+		    			candidatesOutput += '<span class="seats">'+partyCount.won+'<span class="visuallyhidden"> sièges</span></span>';
+		    			candidatesOutput += '<span class="advance">+ '+partyCount.advance+'<span class="visuallyhidden"> sièges</span></span>';
+		    		candidatesOutput += '</span>';
+		    	candidatesOutput += '</li>';
+			}
+		}
+	}
+	
+	overviewScreen.find('ul').html(candidatesOutput);
+	
+	overviewScreen.insertAfter(".overview:last");
+	showMap(districtsScreen,overviewScreen.find('canvas'));
+}
+
+function createPartiesResults(){
+	
+	var districtsScreen = districts;
+	var countParties = [];
+	var arr = districtsScreen,
+	    len, i;
+	
+	for (i = 0, len = arr.length; i < len; i++) {
+		var district = districtsScreen[i];
+		
+		if(!countParties[district.candidates[0].party]){
+			countParties[district.candidates[0].party] = {};
+			countParties[district.candidates[0].party].id = district.candidates[0].party;
+			countParties[district.candidates[0].party].won = 0;
+			countParties[district.candidates[0].party].advance = 0;
+		}
+		
+		if(district.final || district.pollsReported == district.pollsTotal){
+			countParties[district.candidates[0].party].won++;
+		}
+		else if(district.noVotes > 0){
+			countParties[district.candidates[0].party].advance++;
+		}
+	}
+	
+	countParties.sort(function(x, y){ 
+		if((x.won+x.advance) == (y.won+y.advance)){
+			if(x.won == y.won){
+				if(x.advance == y.advance){
+					return 0;
+				}
+				else{
+					return (x.advance) > (y.advance);
+				}
+			}
+			else{
+				return (x.won) > (y.won);
+			}
+		}
+		return (x.won+x.advance) > (y.won+y.advance)
+	});
+	
+	var arr = countParties,
+	    len, i;
+	
+	var partiesOutput = '';
+	
+	for (i = 0, len = arr.length; i < len; i++) {
+		var partyCount = countParties[i];
+		
+		if(typeof partyCount !== "undefined"){
+			var partyAbbr = parties[partyCount.id].abbr.toLowerCase().replace('é','e').replace(/[^a-zA-Z0-9]/g,'');
+			if(basicPartiesAbbr.indexOf(partyAbbr) != -1){
+					
+				partyName = parties[partyCount.id].abbr;
+				if(partyName.indexOf('-') != -1){
+					partyName = partyName.substr(0, partyName.indexOf('-'));
+				}
+				else if(partyName.indexOf('/') != -1){
+					partyName = partyName.substr(0, partyName.indexOf('/'));
+				}
+				
+				partyName = partyName.toLowerCase().replace('é','e').replace(/[^a-zA-Z0-9]/g,'').toUpperCase();
+						
+				partiesOutput += '<li class="rounded fntclr border elected '+partyAbbr+'">';
+					partiesOutput += '<span class="abbr">'+partyName+'</span>';
+					partiesOutput += '<span class="seats">'+(partyCount.won+partyCount.advance)+'</span>';
+				partiesOutput += '</li>';
+			}
+		}
+	}
+	
+	$('header .parties').html(partiesOutput);
+}
+
+function createMenu(){
+	var arr = districts,
+		i, len;
+
+	for (i = 0, len = arr.length; i < len; i++) {
+		var district = districts[i];
+		
+		$('header .menu .districts ul').append('<li class="d'+district.id+'"><a href="#">'+district.name+'</a></li>');
+		
+	}
+	
+	$('.menu .districts a').on('click',function(e){
+		createDistrictScreen(Number($(this).parent().attr('class').replace('d', '')));
+	});
+	
+	var arr = regions,
+		i, len;
+
+	for (i = 0, len = arr.length; i < len; i++) {
+		var region = regions[i];
+		
+		$('header .menu .regions ul').append('<li class="r'+i+'"><a href="#">'+region.name+'</a></li>');
+		
+	}
+	
+	$('.menu .regions a').on('click',function(e){
+		createOverviewScreen(Number($(this).parent().attr('class').replace('r', '')));
+	});
+}
+
+function updateCurrentScreens(){
+	$.each($('.overview:not(.model), .district:not(.model)'), function( index, value ) {
+		if($(this).hasClass('overview'))
+			createOverviewScreen(Number($(this).attr('class').replace('overview active r', '')));
+		else if($(this).hasClass('district'))
+			createDistrictScreen(Number($(this).attr('class').replace('district active d', '')));
+	});
+}
+
+var timer = 5;
+function updateData(){
+	
+	if(timer == 0){
+		timer --;
+		$('.maj').html('<span class="rounded button filled border white">Mise à jour<span class="one">.</span><span class="two">.</span><span class="three">.</span>​</span>');
+		loadResults("http://elections.paulcote.net/data/resultats.json", function(){
+			createPartiesResults();
+			updateCurrentScreens();
+			setTimeout("timer = 150;",3000);
+		});
+	}
+	else if(timer > 0){
+		timer --;
+	
+		if(timer > 60){
+			$('.maj').html('<span class="rounded button border white">Mise à jour dans </span><span class="rounded button filled border white offset-left">'+Math.ceil(timer/60)+'m</span>');
+		}
+		else{
+			$('.maj').html('<span class="rounded button border white">Mise à jour dans </span><span class="rounded button filled border white offset-left">'+timer+'s</span>');
+		}
+	}
+}
+
 $(function() {
-	my_lzma = new LZMA("js/vendor/lzmajs/src/lzma_worker.js");
+
+	$('h1 a').on('click',function(e){
+		createOverviewScreen(-1);
+	});
+
+	$('#licence').on('click',function(e){
+		e.stopPropagation();
+		$('footer .licence').css('display','block');
+	});
+	
+	$('.licence').on('click',function(e){
+		e.stopPropagation();
+	});
+	
+	$('html').on('click',function(e){
+		$('footer .licence').css('display','none');
+	});
 
 	setTimeout(function(){
 		loadDisctricts("data/liste_circonscription.csv");
@@ -543,17 +891,11 @@ $(function() {
 		loadPartiesColors("data/colors.json");
 		loadCandidates("data/liste_candidat.csv");
 		loadRegionsFromJSON("data/regions.json",function(){
-			showMap(districts,$('.o1 canvas'));
-			showMap([districts[1]],$('.d1 canvas'));
+			createMenu();
+			createOverviewScreen(-1);
 			$('.percent-load').text("100%");
 			$('body').removeClass('loading');
-							
-			setTimeout(function(){
-				console.log('Results loaded');
-				//loadPartiesResults("data/partispolitiques.csv");
-				//loadCandidatesResults("data/candidats.csv");
-				loadResults("data/resultats.json");
-			}, 5000);
+			setInterval(updateData,1000);
 		});
 	}, 1000);
 });
