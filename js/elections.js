@@ -338,9 +338,9 @@ function loadCandidates(file){
 				districts[district.id].candidates.push(candidate);
 			}
 			
-			if(candidate.incumbent){
+			/*if(candidate.incumbent){
 				districts[district.id].color = parties[candidate.party].color;
-			}
+			}*/
 		}
 	}});
 	
