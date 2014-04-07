@@ -492,6 +492,9 @@ function loadResults(file, callback){
 		if(callback)
 			callback();
 		
+	},error: function(){
+		if(callback)
+			callback();
 	}});
 }
 
@@ -960,7 +963,7 @@ function createMenu(){
 	for (i = 0, len = arr.length; i < len; i++) {
 		var region = regions[i];
 		
-		$('header .menu .regions ul').append('<li class="r'+i+'"><a href="#">'+region.name+'</a></li>');
+		$('header .menu .regions ul').append('<li class="r'+i+'"><a href="#r'+i+'">'+region.name+'</a></li>');
 		
 	}
 	
@@ -978,7 +981,7 @@ function updateCurrentScreens(){
 	});
 }
 
-var timer = 5;
+var timer = -1;
 function updateData(){
 	
 	if(timer == 0){
@@ -1041,10 +1044,16 @@ $(function() {
     			createOverviewScreen(-1);
 			}
 			
-			
-			$('.percent-load').text("100%");
-			$('body').removeClass('loading');
-			setInterval(updateData,1000);
+			$('.maj').html('<span class="rounded button filled border white">Mise à jour<span class="one">.</span><span class="two">.</span><span class="three">.</span>​</span>');
+			loadResults("http://elections.paulcote.net/data/resultats.json", function(){
+				createPartiesResults();
+				updateCurrentScreens();
+				$('.percent-load').text("100%");
+				$('body').removeClass('loading');
+				setInterval(updateData,1000);
+				setTimeout("timer = 150;",3000);
+			});
+
 		});
 	}, 1000);
 });
