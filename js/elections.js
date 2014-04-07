@@ -1,5 +1,140 @@
 var regions = [{"name" : "Montréal", "districts" : "Acadie,Anjou—Louis-Riel,Bourassa-Sauvé,Bourget,Crémazie,D'Arcy-McGee,Gouin,Hochelaga-Maisonneuve,Jacques-Cartier,Jeanne-Mance—Viger,LaFontaine,Laurier-Dorion,Marguerite-Bourgeoys,Marquette,Mercier,Mont-Royal,Nelligan,Notre-Dame-de-Grâce,Outremont,Pointe-aux-Trembles,Robert-Baldwin,Rosemont,Saint-Henri—Sainte-Anne,Saint-Laurent,Sainte-Marie—Saint-Jacques,Verdun,Viau,Westmount—Saint-Louis,Chomedey,Fabre,Laval-des-Rapides,Mille-Îles,Sainte-Rose,Vimont"},{"name" : "Québec", "districts" : "Charlesbourg,Chauveau,Jean-Lesage,Jean-Talon,La Peltrie,Louis-Hébert,Montmorency,Portneuf,Taschereau,Vanier-Les Rivières,Chutes-de-la-Chaudière,Lévis"}];
 
+var regionsCircs = {
+    "Abitibi-Est" : "Abitibi-Témiscamingue",
+    "Abitibi-Ouest" : "Abitibi-Témiscamingue",
+    "Rouyn-Noranda—Témiscamingue" : "Abitibi-Témiscamingue",
+    "Côte-du-Sud" : "Bas-Saint-Laurent",
+    "Matane-Matapédia" : "Bas-Saint-Laurent",
+    "Rimouski" : "Bas-Saint-Laurent",
+    "Rivière-du-Loup–Témiscouata" : "Bas-Saint-Laurent",
+    "Charlesbourg" : "Capitale-Nationale",
+    "Charlevoix–Côte-de-Beaupré" : "Capitale-Nationale",
+    "Chauveau" : "Capitale-Nationale",
+    "Jean-Lesage" : "Capitale-Nationale",
+    "Jean-Talon" : "Capitale-Nationale",
+    "La Peltrie" : "Capitale-Nationale",
+    "Louis-Hébert" : "Capitale-Nationale",
+    "Montmorency" : "Capitale-Nationale",
+    "Portneuf" : "Capitale-Nationale",
+    "Taschereau" : "Capitale-Nationale",
+    "Vanier-Les Rivières" : "Capitale-Nationale",
+    "Arthabaska" : "Centre-du-Québec",
+    "Drummond–Bois-Francs" : "Centre-du-Québec",
+    "Johnson" : "Centre-du-Québec",
+    "Nicolet-Bécancour" : "Centre-du-Québec",
+    "Beauce-Nord" : "Chaudière-Appalaches",
+    "Beauce-Sud" : "Chaudière-Appalaches",
+    "Bellechasse" : "Chaudière-Appalaches",
+    "Chutes-de-la-Chaudière" : "Chaudière-Appalaches",
+    "Côte-du-Sud" : "Chaudière-Appalaches",
+    "Lévis" : "Chaudière-Appalaches",
+    "Lotbinière-Frontenac" : "Chaudière-Appalaches",
+    "Mégantic" : "Chaudière-Appalaches",
+    "Duplessis" : "Côte-Nord",
+    "René-Lévesques" : "Côte-Nord",
+    "Beauce-Sud" : "Estrie",
+    "Mégantic" : "Estrie",
+    "Orford" : "Estrie",
+    "Richmond" : "Estrie",
+    "Saint-François" : "Estrie",
+    "Sherbrooke" : "Estrie",
+    "Bonaventure" : "Gaspésie—Îles-de-la-Madeleine",
+    "Gaspé" : "Gaspésie—Îles-de-la-Madeleine",
+    "Îles-de-la-Madeleine" : "Gaspésie—Îles-de-la-Madeleine",
+    "Chomedey" : "Laval",
+    "Fabre" : "Laval",
+    "Laval-des-Rapides" : "Laval",
+    "Mille-Îles" : "Laval",
+    "Sainte-Rose" : "Laval",
+    "Vimont" : "Laval",
+    "Berthier" : "Lanaudière",
+    "Bertrand" : "Lanaudière",
+    "Joliette" : "Lanaudière",
+    "L'Assomption" : "Lanaudière",
+    "Masson" : "Lanaudière",
+    "Repentigny" : "Lanaudière",
+    "Rousseau" : "Lanaudière",
+    "Terrebonne" : "Lanaudière",
+    "Argenteuil" : "Laurentides",
+    "Bertrand" : "Laurentides",
+    "Blainville" : "Laurentides",
+    "Deux-Montagnes" : "Laurentides",
+    "Groulx" : "Laurentides",
+    "Labelle" : "Laurentides",
+    "Mirabel" : "Laurentides",
+    "Rousseau" : "Laurentides",
+    "Saint-Jérôme" : "Laurentides",
+    "Champlain" : "Mauricie",
+    "Laviolette" : "Mauricie",
+    "Maskinongé" : "Mauricie",
+    "Saint-Maurice" : "Mauricie",
+    "Trois-Rivières" : "Mauricie",
+    "Acadie" : "Montréal",
+    "Anjou–Louis-Riel" : "Montréal",
+    "Bourassa-Sauvé" : "Montréal",
+    "Bourget" : "Montréal",
+    "Crémazie" : "Montréal",
+    "D'Arcy-McGee" : "Montréal",
+    "Gouin" : "Montréal",
+    "Hochelaga-Maisonneuve" : "Montréal",
+    "Jacques-Cartier" : "Montréal",
+    "Jeanne-Mance—Viger" : "Montréal",
+    "LaFontaine" : "Montréal",
+    "Laurier-Dorion" : "Montréal",
+    "Marguerite-Bourgeoys" : "Montréal",
+    "Marquette" : "Montréal",
+    "Mercier" : "Montréal",
+    "Mont-Royal" : "Montréal",
+    "Nelligan" : "Montréal",
+    "Notre-Dame-de-Grâce" : "Montréal",
+    "Outremont" : "Montréal",
+    "Pointe-aux-Trembles" : "Montréal",
+    "Robert-Baldwin" : "Montréal",
+    "Rosemont" : "Montréal",
+    "Saint-Henri—Sainte-Anne" : "Montréal",
+    "Saint-Laurent" : "Montréal",
+    "Sainte-Marie—Saint-Jacques" : "Montréal",
+    "Verdun" : "Montréal",
+    "Viau" : "Montréal",
+    "Westmount—Saint-Louis" : "Montréal",
+    "Chapleau" : "Outaouais",
+    "Gatineau" : "Outaouais",
+    "Hull" : "Outaouais",
+    "Papineau" : "Outaouais",
+    "Pontiac" : "Outaouais",
+    "Beauharnois" : "Montérégie",
+    "Borduas" : "Montérégie",
+    "Brome-Missisquoi" : "Montérégie",
+    "Chambly" : "Montérégie",
+    "Châteauguay" : "Montérégie",
+    "Granby" : "Montérégie",
+    "Huntingdon" : "Montérégie",
+    "Iberville" : "Montérégie",
+    "Johnson" : "Montérégie",
+    "La Pinière" : "Montérégie",
+    "Laporte" : "Montérégie",
+    "La Prairie" : "Montérégie",
+    "Marie-Victorin" : "Montérégie",
+    "Montarville" : "Montérégie",
+    "Richelieu" : "Montérégie",
+    "Saint-Hyacinthe" : "Montérégie",
+    "Saint-Jean" : "Montérégie",
+    "Sanguinet" : "Montérégie",
+    "Soulanges" : "Montérégie",
+    "Taillon" : "Montérégie",
+    "Vachon" : "Montérégie",
+    "Vaudreuil" : "Montérégie",
+    "Verchères" : "Montérégie",
+    "Duplessis" : "Nord-du-Québec",
+    "Ungava" : "Nord-du-Québec",
+    "Chicoutimi" : "Saguenay—Lac-Saint-Jean",
+    "Dubuc" : "Saguenay—Lac-Saint-Jean",
+    "Jonquière" : "Saguenay—Lac-Saint-Jean",
+    "Lac-Saint-Jean" : "Saguenay—Lac-Saint-Jean",
+    "Roberval" : "Saguenay—Lac-Saint-Jean",
+}
+
 var districts = new Array();
 
 function loadDisctricts(file){
@@ -566,6 +701,7 @@ function createDistrictScreen(id){
 	var districtScreen = $(".district.model").clone();
 	districtScreen.removeClass('model').addClass('active').addClass('d'+id);
 	districtScreen.find('h2').text(district.name);
+	districtScreen.find('.details .region').text(regionsCircs[district.name]);
 	districtScreen.find('.details .button').remove();
 	
 	var arr2 = district.candidates,
@@ -810,7 +946,7 @@ function createMenu(){
 	for (i = 0, len = arr.length; i < len; i++) {
 		var district = districts[i];
 		
-		$('header .menu .districts ul').append('<li class="d'+district.id+'"><a href="#">'+district.name+'</a></li>');
+		$('header .menu .districts ul').append('<li class="d'+district.id+'"><a href="#d'+district.id+'">'+district.name+'</a></li>');
 		
 	}
 	
@@ -892,7 +1028,20 @@ $(function() {
 		loadCandidates("data/liste_candidat.csv");
 		loadRegionsFromJSON("data/regions.json",function(){
 			createMenu();
-			createOverviewScreen(-1);
+			
+			if(window.location.hash) {
+			  if(window.location.hash.indexOf('#d') != -1){
+			      createDistrictScreen(Number(window.location.hash.replace('#d', '')));
+			  }
+			  else if (window.location.hash.indexOf('#r') != -1) {
+			      createOverviewScreen(Number(window.location.hash.replace('#r', '')));
+			  }
+			}
+			else{
+    			createOverviewScreen(-1);
+			}
+			
+			
 			$('.percent-load').text("100%");
 			$('body').removeClass('loading');
 			setInterval(updateData,1000);
