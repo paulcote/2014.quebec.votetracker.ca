@@ -484,7 +484,7 @@ function loadResults(file, callback){
 					return x.nbVotes > y.nbVotes 
 				});
 				
-				districts[i].candidates = candidates;
+				districts[i].candidates = candidates.reverse();
 			}
 			
 		}
