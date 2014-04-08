@@ -736,7 +736,7 @@ function createDistrictScreen(id){
 				candidatesOutput += '<span class="picture rounded drkgb '+partyAbbr+'">';
 					candidatesOutput += '<img class="rounded" src="img/logos/'+partyAbbr+'.png" alt="" />';
 				candidatesOutput += '</span>';
-				candidatesOutput += '<span class="percent">'+(candidate.nbVotesPercent*100)+'%</span>';
+				candidatesOutput += '<span class="percent">'+Math.round(candidate.nbVotesPercent*100)+'%</span>';
 				candidatesOutput += '<span class="votes">'+candidate.nbVotes.toString().replace(/(\d)(?=(\d{3})+$)/g, '$1 ')+'<span class="visuallyhidden"> votes</span></span>';
 			candidatesOutput += '</span>';
 		candidatesOutput += '</li>';
