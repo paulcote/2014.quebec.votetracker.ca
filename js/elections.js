@@ -887,10 +887,10 @@ function createPartiesResults(){
 		}
 		
 		if(district.final || district.pollsReported == district.pollsTotal){
-			countParties[district.candidates[0].party].won++;
+			countParties[district.candidates[0].party].won=countParties[district.candidates[0].party].won+1;
 		}
-		else if(district.noVotes > 0){
-			countParties[district.candidates[0].party].advance++;
+		else if(district.votes > 0){
+			countParties[district.candidates[0].party].advance=countParties[district.candidates[0].party].advance+1;
 		}
 	}
 	
@@ -910,6 +910,8 @@ function createPartiesResults(){
 		}
 		return (x.won+x.advance) > (y.won+y.advance)
 	});
+	
+	countParties = countParties.reverse();
 	
 	var arr = countParties,
 	    len, i;
