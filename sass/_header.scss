@@ -1,0 +1,83 @@
+body > header{
+	background-color: #1f3042;
+	padding: 1vw;
+	position: relative;
+	z-index: 500;
+	
+	h1{
+		font-weight: bold;
+		font-size: 2.8vw;
+		@include inline-block;
+		line-height: 3vw;
+		a, a:hover{
+			text-decoration: none;
+		}
+	}
+	
+	.menu{
+		@include inline-block;
+		margin-top: 5px;
+		margin-left: 5px;
+		& > li{
+			position: relative;
+			@include inline-block;
+			&:hover ul{ display: block;}
+			ul{
+				display: none;
+				background-color: rgba(255,255,255,0.9);
+				position: absolute;
+				columns: 100px 4;
+				-webkit-columns: 100px 4; /* Safari and Chrome */
+				-moz-columns: 100px 4; /* Firefox */
+				width: 90vw;
+				left: -22vw;
+				padding: 2vw;
+				max-height: 50vh;
+				overflow: scroll;
+				margin-top: -3px;
+				z-index: 500;
+				a, a:hover, a:visited{
+					color: #1f3042;
+				}
+				li{
+					margin-bottom: 5px;
+				}
+			}
+			&.regions{
+				ul{
+					columns: initial;
+					-webkit-columns: initial; /* Safari and Chrome */
+					-moz-columns: initial; /* Firefox */
+					width: auto;
+					left: 0
+				}
+			}
+		}
+	}
+	
+	.parties{
+		float: right;
+		margin-top: 0.2vw;
+		width: 50%;
+		text-align: right;
+		li{
+			@include inline-block;
+			width: 7vw;
+			padding: 0.8vw 0; 
+			margin-left: 0.8vw;
+			margin-bottom: 0.4vw;
+			text-align: left;
+			.abbr, .seats{
+				font-size: 1.5vw;
+				margin-left: 0.4vw;
+				font-weight: 300;
+				text-align: left;
+			}
+			.seats{
+				float: right;
+				margin-right: 0.4em;
+				font-weight: 500;
+			}
+		}
+	}
+}

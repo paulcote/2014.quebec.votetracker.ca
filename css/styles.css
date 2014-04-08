@@ -65,7 +65,102 @@ img {
   max-width: 100%;
 }
 
-.drkgb.plq {
+a, a:hover, a:visited {
+  color: white;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* Hide only visually, but have it available for screenreaders: h5bp.com/v */
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+/* Extends the .visuallyhidden class to allow the element to be focusable when navigated to via the keyboard: h5bp.com/p */
+.visuallyhidden.focusable:active, .visuallyhidden.focusable:focus {
+  clip: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  position: static;
+  width: auto;
+}
+
+/**
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    contenteditable attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that are clearfixed.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+.cf:before, .overview ul li:before, .district ul li:before,
+.cf:after,
+.overview ul li:after,
+.district ul li:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
+}
+
+.cf:after, .overview ul li:after, .district ul li:after {
+  clear: both;
+}
+
+/**
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+.cf, .overview ul li, .district ul li {
+  *zoom: 1;
+}
+
+.wrapper {
+  padding: 0 4vw;
+  margin: 0 auto;
+  position: relative;
+}
+
+.bg.plq,
+.bg.plqqlp {
+  background-color: #ed1b2e;
+}
+
+.bg.pq {
+  background-color: #2b7dab;
+}
+
+.bg.caq,
+.bg.caqefl {
+  background-color: #00b3ef;
+}
+
+.bg.qs {
+  background-color: #f26522;
+}
+
+.bg.on,
+.bg.onpiq {
+  background-color: #005aab;
+}
+
+.bg.otr {
+  background-color: #373737;
+}
+
+.drkgb.plq,
+.drkgb.plqqlp {
   background-color: #ad1422;
 }
 
@@ -73,7 +168,8 @@ img {
   background-color: #359ad3;
 }
 
-.drkgb.caq {
+.drkgb.caq,
+.drkgb.caqefl {
   background-color: #008fbf;
 }
 
@@ -81,16 +177,22 @@ img {
   background-color: #bc4e1a;
 }
 
-.drkgb.on {
+.drkgb.on,
+.drkgb.onpiq {
   background-color: #004079;
 }
 
+.drkgb.otr {
+  background-color: #1f1f1f;
+}
+
 .border {
-  border-width: 3px;
+  border-width: 0.2vw;
   border-style: solid;
 }
 
-.border.plq {
+.border.plq,
+.border.plqqlp {
   border-color: #ed1b2e;
 }
 
@@ -98,7 +200,8 @@ img {
   border-color: #2b7dab;
 }
 
-.border.caq {
+.border.caq,
+.border.caqefl {
   border-color: #00b3ef;
 }
 
@@ -106,12 +209,40 @@ img {
   border-color: #f26522;
 }
 
-.border.on {
+.border.on,
+.border.onpiq {
   border-color: #005aab;
+}
+
+.border.otr {
+  border-color: #373737;
 }
 
 .border.white {
   border-color: white;
+}
+
+.fntclr.plq,
+.fntclr.plqqlp {
+  color: #ed1b2e;
+}
+
+.fntclr.pq {
+  color: #2b7dab;
+}
+
+.fntclr.caq,
+.fntclr.caqefl {
+  color: #00b3ef;
+}
+
+.fntclr.qs {
+  color: #f26522;
+}
+
+.fntclr.on,
+.fntclr.onpiq {
+  color: #005aab;
 }
 
 .rounded {
@@ -128,19 +259,50 @@ img {
   zoom: 1;
   *display: inline;
 }
-
 .button.filled {
   background-color: white;
   color: #3aa1d3;
   font-weight: 500;
 }
+.button.offset-left {
+  margin-left: -6px;
+}
 
-.splash .content {
-  position: absolute;
+section {
+  opacity: 0;
+  -webkit-transition: opacity 1s;
+  transition: opacity 1s;
+  z-index: 100;
+}
+
+section.active {
+  z-index: 120;
+  opacity: 1;
+}
+
+section.next {
+  z-index: 130;
+}
+
+section.next.active {
+  z-index: 150;
+}
+
+.loading header, .loading section:not(.splash), .loading footer {
+  opacity: 0;
+}
+.loading .splash {
+  opacity: 1;
+}
+
+.splash {
+  position: fixed;
   width: 100%;
   top: 50%;
   height: 250px;
   margin-top: -125px;
+  opacity: 0;
+  z-index: 50;
 }
 .splash h1 {
   text-align: center;
@@ -171,4 +333,432 @@ img {
   width: 108px;
   height: 108px;
   display: block;
+}
+.splash body {
+  padding: 25px;
+  font-size: 24px;
+}
+.splash .one {
+  opacity: 0;
+  -webkit-animation: dot 1.3s infinite;
+  -webkit-animation-delay: 0.0s;
+  animation-animation: dot 1.3s infinite;
+  animation-delay: 0.0s;
+}
+.splash .two {
+  opacity: 0;
+  -webkit-animation: dot 1.3s infinite;
+  -webkit-animation-delay: 0.2s;
+  animation-animation: dot 1.3s infinite;
+  animation-delay: 0.2s;
+}
+.splash .three {
+  opacity: 0;
+  -webkit-animation: dot 1.3s infinite;
+  -webkit-animation-delay: 0.3s;
+  animation-animation: dot 1.3s infinite;
+  animation-delay: 0.3s;
+}
+
+@-webkit-keyframes dot {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes dot {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+body > header {
+  background-color: #1f3042;
+  padding: 1vw;
+  position: relative;
+  z-index: 500;
+}
+body > header h1 {
+  font-weight: bold;
+  font-size: 2.8vw;
+  display: -moz-inline-stack;
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  zoom: 1;
+  *display: inline;
+  line-height: 3vw;
+}
+body > header h1 a, body > header h1 a:hover {
+  text-decoration: none;
+}
+body > header .menu {
+  display: -moz-inline-stack;
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  zoom: 1;
+  *display: inline;
+  margin-top: 5px;
+  margin-left: 5px;
+}
+body > header .menu > li {
+  position: relative;
+  display: -moz-inline-stack;
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  zoom: 1;
+  *display: inline;
+}
+body > header .menu > li:hover ul {
+  display: block;
+}
+body > header .menu > li ul {
+  display: none;
+  background-color: rgba(255, 255, 255, 0.9);
+  position: absolute;
+  columns: 100px 4;
+  -webkit-columns: 100px 4;
+  /* Safari and Chrome */
+  -moz-columns: 100px 4;
+  /* Firefox */
+  width: 90vw;
+  left: -22vw;
+  padding: 2vw;
+  max-height: 50vh;
+  overflow: scroll;
+  margin-top: -3px;
+  z-index: 500;
+}
+body > header .menu > li ul a, body > header .menu > li ul a:hover, body > header .menu > li ul a:visited {
+  color: #1f3042;
+}
+body > header .menu > li ul li {
+  margin-bottom: 5px;
+}
+body > header .menu > li.regions ul {
+  columns: initial;
+  -webkit-columns: initial;
+  /* Safari and Chrome */
+  -moz-columns: initial;
+  /* Firefox */
+  width: auto;
+  left: 0;
+}
+body > header .parties {
+  float: right;
+  margin-top: 0.2vw;
+  width: 50%;
+  text-align: right;
+}
+body > header .parties li {
+  display: -moz-inline-stack;
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  zoom: 1;
+  *display: inline;
+  width: 7vw;
+  padding: 0.8vw 0;
+  margin-left: 0.8vw;
+  margin-bottom: 0.4vw;
+  text-align: left;
+}
+body > header .parties li .abbr, body > header .parties li .seats {
+  font-size: 1.5vw;
+  margin-left: 0.4vw;
+  font-weight: 300;
+  text-align: left;
+}
+body > header .parties li .seats {
+  float: right;
+  margin-right: 0.4em;
+  font-weight: 500;
+}
+
+.overview.model {
+  display: none;
+}
+.overview canvas {
+  position: absolute;
+  top: 8vw;
+  right: 1vw;
+  width: 50%;
+  height: 80%;
+}
+.overview h2 {
+  font-size: 3.5vw;
+  margin: 2vw 0;
+  margin-left: 16vw;
+}
+.overview ul li {
+  display: block;
+  margin-bottom: 2vw;
+  padding-left: 2vw;
+}
+.overview ul li span, .overview ul li div {
+  display: -moz-inline-stack;
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  zoom: 1;
+  *display: inline;
+}
+.overview ul li .infos h3 {
+  font-size: 2vw;
+  font-weight: 300;
+  margin-bottom: 5px;
+}
+.overview ul li .infos h3 strong {
+  font-weight: 500;
+}
+.overview ul li .infos .leader {
+  font-size: 1.3vw;
+  font-weight: 300;
+  margin-top: -0.2vw;
+  margin-bottom: 0.5vw;
+  display: block;
+}
+.overview ul li .infos .button {
+  font-weight: 300;
+  font-size: 1vw;
+  padding: 0.3vw 0.7vw;
+  border-width: 2px;
+}
+.overview ul li .infos .button.filled {
+  font-weight: normal;
+}
+.overview ul li .box {
+  width: 12vw;
+  float: left;
+  margin-right: 20px;
+}
+.overview ul li .box .seats {
+  font-size: 2.2vw;
+  font-weight: bold;
+  display: block;
+  text-align: right;
+  margin-top: 5px;
+}
+.overview ul li .box .advance {
+  font-size: 1.7vw;
+  display: block;
+  text-align: right;
+  margin-top: 1vw;
+}
+.overview ul li .box .picture {
+  width: 5.5vw;
+  float: right;
+  margin-left: 10px;
+}
+.overview ul li:first-child {
+  padding-left: 0;
+}
+.overview ul li:first-child .box {
+  width: 14vw;
+}
+.overview ul li:first-child .box .seats {
+  font-size: 2.8vw;
+}
+.overview ul li:first-child .box .advance {
+  font-size: 2vw;
+  margin-top: 10px;
+}
+.overview ul li:first-child .box .advance:after {
+  content: "en avance";
+  font-size: 1.1vw;
+  display: block;
+  font-weight: 300;
+  margin-top: -5px;
+}
+.overview ul li:first-child .box .picture {
+  width: 7vw;
+}
+.overview ul li:first-child .infos h3 {
+  font-size: 2.7vw;
+}
+.overview ul li:first-child .infos .leader {
+  font-size: 1.7vw;
+  margin-top: -0.4vw;
+  margin-bottom: 0.9vw;
+}
+.overview ul li:first-child .infos .button {
+  font-size: 1.3vw;
+}
+
+.district.model {
+  display: none;
+}
+.district canvas {
+  float: left;
+  width: 14.2vw;
+  height: 10.4vw;
+  margin-right: 20px;
+}
+.district .details {
+  margin: 2vw 0;
+}
+.district .details h2 {
+  font-size: 3.5vw;
+  font-weight: 300;
+  margin-bottom: 1vw;
+}
+.district .details .region {
+  display: block;
+  font-size: 2vw;
+  font-weight: 300;
+  margin-bottom: 1vw;
+}
+.district .details .button {
+  font-size: 1.5vw;
+}
+.district ul li {
+  display: block;
+  margin-bottom: 2vw;
+  padding-left: 2vw;
+}
+.district ul li span, .district ul li div {
+  display: -moz-inline-stack;
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  zoom: 1;
+  *display: inline;
+}
+.district ul li .infos h3 {
+  font-size: 2vw;
+  font-weight: 300;
+  margin-bottom: 5px;
+}
+.district ul li .infos h3 strong {
+  font-weight: 500;
+}
+.district ul li .infos .leader {
+  font-size: 1.3vw;
+  font-weight: 300;
+  margin-top: -0.2vw;
+  margin-bottom: 0.5vw;
+  display: block;
+}
+.district ul li .infos .button {
+  font-weight: 300;
+  font-size: 1vw;
+  padding: 0.3vw 0.7vw;
+  border-width: 2px;
+}
+.district ul li .infos .button.filled {
+  font-weight: normal;
+}
+.district ul li .box {
+  width: 12vw;
+  float: left;
+  margin-right: 20px;
+}
+.district ul li .box .percent {
+  font-size: 2vw;
+  font-weight: normal;
+  display: block;
+  text-align: right;
+  margin-top: 5px;
+}
+.district ul li .box .votes {
+  font-size: 1.4vw;
+  display: block;
+  text-align: right;
+  margin-top: 1vw;
+}
+.district ul li .box .picture {
+  width: 5.5vw;
+  float: right;
+  margin-left: 10px;
+}
+.district ul:not(.no-advance) li:first-child {
+  padding-left: 0;
+}
+.district ul:not(.no-advance) li:first-child .box {
+  width: 14vw;
+}
+.district ul:not(.no-advance) li:first-child .box .percent {
+  font-size: 2.3vw;
+}
+.district ul:not(.no-advance) li:first-child .box .votes {
+  font-size: 1.7vw;
+  margin-top: 2vw;
+}
+.district ul:not(.no-advance) li:first-child .box .picture {
+  width: 7vw;
+}
+.district ul:not(.no-advance) li:first-child .infos h3 {
+  font-size: 2.7vw;
+}
+.district ul:not(.no-advance) li:first-child .infos .leader {
+  font-size: 1.7vw;
+  margin-top: 0vw;
+  margin-bottom: 0.3vw;
+}
+.district ul:not(.no-advance) li:first-child .infos .button {
+  font-size: 1.3vw;
+}
+
+footer p {
+  font-size: 15px;
+  text-align: right;
+  padding: 0 20px 20px 0;
+}
+footer .one {
+  opacity: 0;
+  -webkit-animation: dot 1.3s infinite;
+  -webkit-animation-delay: 0.0s;
+  animation-animation: dot 1.3s infinite;
+  animation-delay: 0.0s;
+}
+footer .two {
+  opacity: 0;
+  -webkit-animation: dot 1.3s infinite;
+  -webkit-animation-delay: 0.2s;
+  animation-animation: dot 1.3s infinite;
+  animation-delay: 0.2s;
+}
+footer .three {
+  opacity: 0;
+  -webkit-animation: dot 1.3s infinite;
+  -webkit-animation-delay: 0.3s;
+  animation-animation: dot 1.3s infinite;
+  animation-delay: 0.3s;
+}
+footer .licence {
+  position: fixed;
+  width: 100%;
+  top: 50%;
+  height: 250px;
+  margin-top: -125px;
+  opacity: 1;
+  display: none;
+}
+footer .licence .text {
+  width: 50%;
+  margin: 10px auto;
+  background-color: #1f3042;
+  padding: 20px 40px;
+}
+footer .licence .text p {
+  text-align: left;
+  margin: 20px 0;
 }

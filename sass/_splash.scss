@@ -1,0 +1,80 @@
+.splash{
+	position: fixed;
+	width: 100%;
+	top: 50%;
+	height: 250px;
+	margin-top: -125px;
+	opacity: 0;
+	z-index: 50;
+
+	h1{
+		text-align: center;
+		font-weight: bold;
+		font-size: 48px;
+		margin-bottom: 20px;
+	}
+
+	h2{
+		text-align: center;
+		margin-top: 20px
+	}
+
+	ul{ 
+		margin: 0 auto;
+		display: block;
+		width: 100%;
+		text-align: center;
+		li{
+			@include inline-block;
+			margin: 0 5px;
+		}
+	}
+
+	.logo{
+		width: 108px;
+		height: 108px;
+		display: block;
+	}
+	
+	body {
+	    padding: 25px;
+	    font-size: 24px;
+	}
+	
+	.one {
+	    opacity: 0;
+	    -webkit-animation: dot 1.3s infinite;
+	    -webkit-animation-delay: 0.0s;
+	    animation-animation: dot 1.3s infinite;
+	    animation-delay: 0.0s;
+	}
+	
+	.two {
+	    opacity: 0;
+	    -webkit-animation: dot 1.3s infinite;
+	    -webkit-animation-delay: 0.2s;
+	    animation-animation: dot 1.3s infinite;
+	    animation-delay: 0.2s;
+	}
+	
+	.three {
+	    opacity: 0;
+	    -webkit-animation: dot 1.3s infinite;
+	    -webkit-animation-delay: 0.3s;
+		animation-animation: dot 1.3s infinite;
+		animation-delay: 0.3s;
+	}
+	
+}
+	
+@-webkit-keyframes dot {
+      0% { opacity: 0; }
+     50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes dot {
+      0% { opacity: 0; }
+     50% { opacity: 0; }
+    100% { opacity: 1; }
+} 

@@ -1,0 +1,120 @@
+.overview{
+
+	&.model{ display: none}
+
+	canvas{
+		position: absolute;
+		top: 8vw;
+		right: 1vw;
+		width: 50%;
+		height: 80%;
+	}
+	
+	h2{
+		font-size: 3.5vw;
+		margin: 2vw 0;
+		margin-left: 16vw;
+	}
+	
+	ul{
+		li{
+			display: block;
+			@extend .cf;
+			margin-bottom: 2vw;
+			padding-left: 2vw;
+			
+			span, div{
+				@include inline-block;
+			}
+			
+			.infos {
+				h3{
+					font-size: 2vw;
+					font-weight: 300;
+					margin-bottom: 5px;
+					strong{
+						font-weight: 500;
+					}
+				}
+				.leader{
+					font-size: 1.3vw;
+					font-weight: 300;
+					margin-top: -0.2vw;
+					margin-bottom: 0.5vw;
+					display: block;
+				}
+				.button{
+					font-weight: 300;
+					font-size: 1vw;
+					padding: 0.3vw 0.7vw;
+					border-width: 2px;
+					&.filled{
+						font-weight: normal;
+					}
+				}
+			}
+			
+			.box{
+				width: 12vw;
+				float: left;
+				margin-right: 20px; 
+				.seats{
+					font-size: 2.2vw;
+					font-weight: bold;
+					display: block;
+					text-align: right;
+					margin-top: 5px;
+				}
+				.advance{
+					font-size: 1.7vw;
+					display: block;
+					text-align: right;
+					margin-top: 1vw;
+				}
+				.picture{
+					width: 5.5vw;
+					float: right;
+					margin-left: 10px;
+				}
+			}
+		}
+		
+		li:first-child{
+			padding-left: 0;
+			.box{
+				width: 14vw;
+				.seats{
+					font-size: 2.8vw;
+				}
+				.advance{
+					font-size: 2vw;
+					margin-top: 10px
+				}
+				.advance:after{
+					content:"en avance";
+					font-size: 1.1vw;
+					display: block;
+					font-weight: 300;
+					margin-top: -5px;
+				}
+				.picture{
+					width: 7vw;
+				}
+			}
+			.infos{
+				h3{
+					font-size: 2.7vw;
+				}
+				.leader{
+					font-size: 1.7vw;
+					margin-top: -0.4vw;
+					margin-bottom: 0.9vw;
+				}
+				.button{
+					font-size: 1.3vw;
+				}
+			}
+		}
+	}
+
+}
