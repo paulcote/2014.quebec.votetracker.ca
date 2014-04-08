@@ -452,7 +452,7 @@ function loadResults(file, callback){
 						districts[district.id].candidates[i1].nbVotesPercent = candidateJson.tauxVote/100;
 						
 						if(candidateJson.nbVoteTotal > mostVotes){
-							mostVote = candidateJson.nbVoteTotal;
+							mostVotes = candidateJson.nbVoteTotal;
 							winningParty = districts[district.id].candidates[i1].party;
 						}
 					}
