@@ -9,7 +9,7 @@ var regionsCircs = {
     "Rimouski" : "Bas-Saint-Laurent",
     "Rivière-du-Loup–Témiscouata" : "Bas-Saint-Laurent",
     "Charlesbourg" : "Capitale-Nationale",
-    "Charlevoix–Côte-de-Beaupré" : "Capitale-Nationale",
+    "Charlevoix—Côte-de-Beaupré" : "Capitale-Nationale",
     "Chauveau" : "Capitale-Nationale",
     "Jean-Lesage" : "Capitale-Nationale",
     "Jean-Talon" : "Capitale-Nationale",
@@ -723,14 +723,19 @@ function createDistrictScreen(id){
 			candidatesOutput += '<div class="infos">';
 				candidatesOutput += '<h3>'+candidate.firstname+' <strong>'+candidate.lastname+'</strong></h3>';
 				candidatesOutput += '<span class="leader">'+parties[candidate.party].name+'</span>';
-				if(candidate.incumbent)
+				
+				if(ci > 0 && candidate.incumbent && district.pollsReported == district.pollsTotal && district.votes > 0)
+					candidatesOutput += '<span class="rounded filled button border white">Défait'+(candidate.sex == 'F'?'e':'')+'</span>';
+				else if(candidate.incumbent)
 					candidatesOutput += '<span class="rounded button border white">Sortant</span>';
-				if(ci == 0 && district.pollsReported != 0 && district.votes > 0)
-					candidatesOutput += '<span class="rounded button border white">En avance</span>';
-				else if(ci == 0 && candidate.incumbent && district.pollsReported == district.pollsTotal && district.votes > 0)
+					
+				if(ci == 0 && candidate.incumbent && district.pollsReported == district.pollsTotal && district.votes > 0)
 					candidatesOutput += '<span class="rounded filled button border white">Rélu'+(candidate.sex == 'F'?'e':'')+'</span>';
 				else if(ci == 0 && district.pollsReported == district.pollsTotal && district.votes > 0)
 					candidatesOutput += '<span class="rounded filled button border white">Élu'+(candidate.sex == 'F'?'e':'')+'</span>';
+				else ifif(ci == 0 && district.pollsReported != 0 && district.votes > 0)
+					candidatesOutput += '<span class="rounded button border white">En avance</span>';
+					
 			candidatesOutput += '</div>';
 			candidatesOutput += '<span class="box bg border '+partyAbbr+' rounded">';
 				candidatesOutput += '<span class="picture rounded drkgb '+partyAbbr+'">';
