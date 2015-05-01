@@ -730,7 +730,7 @@ function createDistrictScreen(id){
 					candidatesOutput += '<span class="rounded button border white">Sortant</span>';
 					
 				if(ci == 0 && candidate.incumbent && district.pollsReported == district.pollsTotal && district.votes > 0)
-					candidatesOutput += '<span class="rounded filled button border white">Rélu'+(candidate.sex == 'F'?'e':'')+'</span>';
+					candidatesOutput += '<span class="rounded filled button border white">Réélu'+(candidate.sex == 'F'?'e':'')+'</span>';
 				else if(ci == 0 && district.pollsReported == district.pollsTotal && district.votes > 0)
 					candidatesOutput += '<span class="rounded filled button border white">Élu'+(candidate.sex == 'F'?'e':'')+'</span>';
 				else if(ci == 0 && district.pollsReported != 0 && district.votes > 0)
